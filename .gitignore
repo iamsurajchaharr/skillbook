@@ -12,8 +12,7 @@ out/
 dist/
 
 # Sanity build and cache
-.sanity/
-.sanity-*
+
 
 # OS files
 .DS_Store
