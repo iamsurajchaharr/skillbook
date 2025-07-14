@@ -1,8 +1,8 @@
 import { createClient } from '@sanity/client'
 
 export const sanityClient = createClient({
-  projectId: 'n4crhqi8',    // your Sanity project ID
+  projectId: 'n4crhqi8',    
   dataset: 'production',
-  apiVersion: '2024-07-01',          // use a fixed date for caching
+  apiVersion: '2024-07-01',          
   useCdn: true,
 })

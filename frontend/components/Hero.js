@@ -54,6 +54,18 @@ export default function Hero({ data }) {
       <div className="relative z-10 container mx-auto px-6 py-32 text-white text-center md:text-left">
         <h1 className="hero-title text-5xl font-bold">{data.title || 'Welcome to Our Course Platform'}</h1>
         <p className="hero-subtitle mt-4 text-xl opacity-0">{data.subtitle || 'Discover amazing courses and enhance your skills'}</p>
+        {data.badges && data.badges.length > 0 && (
+          <div className="flex flex-row justify-center md:justify-start gap-4 mt-4">
+            {data.badges.map((badge, idx) => (
+              <img
+                key={idx}
+                src={urlFor(badge).width(80).height(80).url()}
+                alt={`Accreditation badge ${idx + 1}`}
+                className="h-12 w-12 object-contain bg-white rounded shadow"
+              />
+            ))}
+          </div>
+        )}
         <a href={data.buttonLink || '#courses'} className="hero-cta mt-8 inline-block bg-red-600 px-6 py-3 rounded opacity-0">
           {data.buttonText || 'Explore Courses'}
         </a>

@@ -22,7 +22,7 @@ export default function StepSection({ data }) {
         <h2 className="text-3xl font-bold mb-4 text-center">{data.heading}</h2>
         <p className="text-lg text-gray-600 mb-12 text-center">{data.subheading}</p>
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-          {data.steps.map((step, idx) => (
+          {data?.steps.map((step, idx) => (
             <div key={idx} className="step-card flex flex-col items-center bg-white rounded shadow p-6 opacity-0">
               <img
                 src={step.icon ? urlFor(step.icon).width(64).url() : '/placeholder-icon.png'}
