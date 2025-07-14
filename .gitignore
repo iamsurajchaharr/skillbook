@@ -1,0 +1,35 @@
+# Node modules
+node_modules/
+
+# Logs
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Build output
+.next/
+out/
+dist/
+
+# Sanity build and cache
+.sanity/
+.sanity-*
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Env files
+.env
+.env.*
+
+# VSCode
+.vscode/
+
+# Misc
+*.local
+*.log
+
+# Ignore frontend and sanity lock files if needed
+frontend/package-lock.json
+sanity/package-lock.json 
