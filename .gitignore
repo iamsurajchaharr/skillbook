@@ -11,8 +11,6 @@ yarn-error.log*
 out/
 dist/
 
-# Sanity build and cache
-
 
 # OS files
 .DS_Store
