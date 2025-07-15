@@ -6,14 +6,14 @@ export default function Testimonials({ items }) {
   const sectionRef = useRef()
   useEffect(() => {
     if (sectionRef.current) {
-      anime({
-        targets: sectionRef.current.querySelectorAll('.testimonial-card'),
-        opacity: [0,1],
-        translateY: [40,0],
-        delay: anime.stagger(200),
-        duration: 800,
-        easing: 'easeOutExpo'
-      })
+      // anime({
+      //   targets: sectionRef.current.querySelectorAll('.testimonial-card'),
+      //   opacity: [0,1],
+      //   translateY: [40,0],
+      //   delay: anime.stagger(200),
+      //   duration: 800,
+      //   easing: 'easeOutExpo'
+      // })
     }
   }, [items])
   return (

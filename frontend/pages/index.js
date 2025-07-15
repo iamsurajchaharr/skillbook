@@ -1,36 +1,58 @@
 import React from 'react'
 import { sanityClient } from '../utils/sanityClient'
+import Navbar from '../components/Navbar'
 import Hero from '../components/Hero'
 import CoursesGrid from '../components/CoursesGrid'
 import Features from '../components/Features'
 import LearningExperience from '../components/LearningExperience'
-import StepSection from '../components/StepSection'
 import Testimonials from '../components/Testimonials'
-import Accreditation from '../components/Accreditation'
-import BlogPreview from '../components/BlogPreview'
-import FAQ from '../components/FAQ'
-import LogosMarquee from '../components/LogosMarquee'
-import CTA from '../components/CTA'
+import FeaturesStrip from '../components/FeaturesStrip'
+import WhyChooseUs from '../components/WhyChooseUs'
+import Benefits from '../components/Benefits'
+import WhyAdoptSafe from '../components/WhyAdoptSafe'
+import FrameworkDiagramSection from '../components/FrameworkDiagramSection'
+import SkillbookLearningExperience from '../components/SkillbookLearningExperience'
+import AgileExcellenceCTA from '../components/AgileExcellenceCTA'
+import IndustryTestimonials from '../components/IndustryTestimonials'
+import ClientLogos from '../components/ClientLogos'
+import SkillbookBlog from '../components/SkillbookBlog'
+import SafePromotion from '../components/SafePromotion'
+import CareerCTA from '../components/CareerCTA'
+import FAQContact from '../components/FAQContact'
+import Accreditations from '../components/Accreditations'
 import Footer from '../components/Footer'
 
 export async function getStaticProps() {
+  const navbarData = await sanityClient.fetch(`*[_type=="navbar"][0]`)
   const heroData = await sanityClient.fetch(`*[_type=="heroSection"][0]`)
-  const courses = await sanityClient.fetch(`*[_type=="course"] | order(price desc)`)
+  const featuresStripData = await sanityClient.fetch(`*[_type=="iconFeatures"][0]`)
+  const courses = await sanityClient.fetch(`*[_type=="course"] | order(currentPrice desc)`)
   const features = await sanityClient.fetch(`*[_type=="feature"]`)
   const testimonials = await sanityClient.fetch(`*[_type=="testimonial"]`)
-  const blogPosts = await sanityClient.fetch(`*[_type=="blogPost"][0...3]`)
-  const partnerLogos = await sanityClient.fetch(`*[_type=="partnerLogo"]`)
-  const ctaData = await sanityClient.fetch(`*[_type=="ctaSection"][0]`)
-  const accreditations = await sanityClient.fetch(`*[_type=="accreditation"]`)
-  const stepSection = await sanityClient.fetch(`*[_type=="stepSection"][0]`)
-  const faqData = await sanityClient.fetch(`*[_type=="faq"][0]`)
-  const learningExperience = await sanityClient.fetch(`*[_type=="learningExperience"][0]`)
   const coursesSection = await sanityClient.fetch(`*[_type=="coursesSection"][0]`)
+  const whyChooseUsData = await sanityClient.fetch(`*[_type=="whyChooseUs"][0]`)
+  const benefitsData = await sanityClient.fetch(`*[_type=="benefits"][0]`)
+  const whyAdoptSafeData = await sanityClient.fetch(`*[_type=="whyAdoptSafe"][0]`)
+  const frameworkDiagramSectionData = await sanityClient.fetch(`*[_type=="frameworkDiagramSection"][0]`)
+  const skillbookLearningExperienceData = await sanityClient.fetch(`*[_type=="skillbookLearningExperience"][0]`)
+  const agileExcellenceCTAData = await sanityClient.fetch(`*[_type=="agileExcellenceCTA"][0]`)
+  const industryTestimonialsData = await sanityClient.fetch(`*[_type=="industryTestimonials"][0]`)
+  const clientLogosData = await sanityClient.fetch(`*[_type=="clientLogos"][0]`)
+  const skillbookBlogData = await sanityClient.fetch(`*[_type=="skillbookBlog"][0]`)
+  const safePromotionData = await sanityClient.fetch(`*[_type=="safePromotion"][0]`)
+  const careerCTAData = await sanityClient.fetch(`*[_type=="careerCTA"][0]`)
+  const faqContactData = await sanityClient.fetch(`*[_type=="faqContact"][0]`)
+  const accreditationsData = await sanityClient.fetch(`*[_type=="accreditation"][0]`)
+  const learningExperience = await sanityClient.fetch(`*[_type=="learningExperience"][0]`)
+  const footerData = await sanityClient.fetch(`*[_type=="footer"][0]`)
 
   return {
     props: {
-      heroData, courses, features, testimonials, blogPosts, partnerLogos, ctaData,
-      accreditations, stepSection, faqData, learningExperience, coursesSection
+      navbarData, heroData, featuresStripData, courses, features, testimonials, coursesSection, 
+      whyChooseUsData, benefitsData, whyAdoptSafeData, frameworkDiagramSectionData, 
+      skillbookLearningExperienceData, agileExcellenceCTAData, industryTestimonialsData, 
+      clientLogosData, skillbookBlogData, safePromotionData, careerCTAData, faqContactData, 
+      accreditationsData, learningExperience, footerData
     },
     revalidate: 60,
   }
@@ -39,18 +61,32 @@ export async function getStaticProps() {
 export default function Home(props) {
   return (
     <>
+      <Navbar 
+        logo={props.navbarData?.logo?.image} 
+        links={props.navbarData?.links || []} 
+        showSearch={props.navbarData?.showSearch}
+        searchPlaceholder={props.navbarData?.searchPlaceholder}
+      />
       <Hero data={props.heroData} />
+      <FeaturesStrip data={props.featuresStripData} />
       <CoursesGrid courses={props.courses} section={props.coursesSection} />
       <Features items={props.features} />
+      <WhyAdoptSafe data={props.whyAdoptSafeData} />
+      <FrameworkDiagramSection data={props.frameworkDiagramSectionData} />
+      <SkillbookLearningExperience data={props.skillbookLearningExperienceData} />
+      <AgileExcellenceCTA data={props.agileExcellenceCTAData} />
+      <IndustryTestimonials data={props.industryTestimonialsData} />
+      <ClientLogos data={props.clientLogosData} />
+      <SkillbookBlog data={props.skillbookBlogData} />
+      <SafePromotion data={props.safePromotionData} />
+      <CareerCTA data={props.careerCTAData} />
+      <FAQContact data={props.faqContactData} />
+      <WhyChooseUs data={props.whyChooseUsData} />
+      <Benefits data={props.benefitsData} />
       <LearningExperience data={props.learningExperience} />
-      <StepSection data={props.stepSection} />
       <Testimonials items={props.testimonials} />
-      <Accreditation items={props.accreditations} />
-      <BlogPreview posts={props.blogPosts} />
-      <FAQ data={props.faqData} />
-      <LogosMarquee logos={props.partnerLogos} />
-      <CTA data={props.ctaData} />
-      <Footer />
+      <Accreditations data={props.accreditationsData} />
+      <Footer data={props.footerData} />
     </>
   )
 } 

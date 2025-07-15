@@ -1,28 +1,122 @@
-import React from 'react'
+import React, { useState } from 'react'
 import CourseCard from './CourseCard'
 
 export default function CoursesGrid({ courses, section }) {
-  const heading = section?.heading || 'Trending Certification Courses';
-  const description = section?.description;
+  const [activeTab, setActiveTab] = useState('all')
+  
+  const heading = section?.heading || 'Trending Certification Courses by Scaled Agile Framework®';
+  const description = section?.description || 'Scaled Agile offers a variety of courses designed to help individuals and organizations successfully implement Agile methodologies at scale. These courses are led by experienced instructors and cover a range of topics, including Agile principles and practices, Lean-Agile leadership, DevOps, and more.';
+  const tabs = section?.tabs || [
+    { label: 'All', value: 'all', isDefault: true },
+    { label: 'Foundational', value: 'foundational', isDefault: false },
+    { label: 'Advance', value: 'advance', isDefault: false }
+  ];
+
+  // Set default active tab
+  React.useEffect(() => {
+    const defaultTab = tabs.find(tab => tab.isDefault);
+    if (defaultTab) {
+      setActiveTab(defaultTab.value);
+    }
+  }, [tabs]);
+
+  // Filter courses based on active tab
+  const filteredCourses = React.useMemo(() => {
+    if (!courses) return [];
+    if (activeTab === 'all') return courses;
+    return courses.filter(course => course.category === activeTab);
+  }, [courses, activeTab]);
 
   if (!courses || courses.length === 0) {
     return (
-      <section className="py-16 container mx-auto px-6">
-        <h2 className="text-3xl font-bold mb-4 text-center">{heading}</h2>
-        {description && <p className="text-lg text-gray-600 mb-8 text-center">{description}</p>}
-        <div className="text-center py-12">
-          <p className="text-gray-600">No courses available at the moment. Check back soon!</p>
+      <section className="py-16 bg-gray-50">
+        <div className="container mx-auto px-6">
+          {/* Header */}
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-12">
+            <div>
+              <h2 className="text-3xl lg:text-4xl font-bold text-gray-900 mb-4">
+                {heading}
+              </h2>
+            </div>
+            <div className="flex items-start">
+              <p className="text-lg text-gray-600 leading-relaxed">
+                {description}
+              </p>
+            </div>
+          </div>
+          
+          {/* Tabs */}
+          <div className="flex space-x-8 mb-8 border-b border-gray-200">
+            {tabs.map((tab) => (
+              <button
+                key={tab.value}
+                onClick={() => setActiveTab(tab.value)}
+                className={`pb-4 px-1 font-medium text-lg transition-colors duration-200 ${
+                  activeTab === tab.value
+                    ? 'text-red-600 border-b-2 border-red-600'
+                    : 'text-gray-500 hover:text-gray-700'
+                }`}
+              >
+                {tab.label}
+              </button>
+            ))}
+          </div>
+          
+          <div className="text-center py-12">
+            <p className="text-gray-600">No courses available at the moment. Check back soon!</p>
+          </div>
         </div>
       </section>
     )
   }
 
   return (
-    <section className="py-16 container mx-auto px-6">
-      <h2 className="text-3xl font-bold mb-4 text-center">{heading}</h2>
-      {description && <p className="text-lg text-gray-600 mb-8 text-center">{description}</p>}
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
-        {courses.map(c => <CourseCard key={c._id} course={c} />)}
+    <section className="py-16 bg-gray-50">
+      <div className="container mx-auto px-6">
+        {/* Header */}
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-12">
+          <div>
+            <h2 className="text-3xl lg:text-4xl font-bold text-gray-900 mb-4">
+              {heading}
+            </h2>
+          </div>
+          <div className="flex items-start">
+            <p className="text-lg text-gray-600 leading-relaxed">
+              {description}
+            </p>
+          </div>
+        </div>
+        
+        {/* Tabs */}
+        <div className="flex space-x-8 mb-8 border-b border-gray-200">
+          {tabs.map((tab) => (
+            <button
+              key={tab.value}
+              onClick={() => setActiveTab(tab.value)}
+              className={`pb-4 px-1 font-medium text-lg transition-colors duration-200 ${
+                activeTab === tab.value
+                  ? 'text-red-600 border-b-2 border-red-600'
+                  : 'text-gray-500 hover:text-gray-700'
+              }`}
+            >
+              {tab.label}
+            </button>
+          ))}
+        </div>
+        
+        {/* Course Grid */}
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+          {filteredCourses.map(course => (
+            <CourseCard key={course._id} course={course} />
+          ))}
+        </div>
+        
+        {/* Show message if no courses in selected category */}
+        {filteredCourses.length === 0 && (
+          <div className="text-center py-12">
+            <p className="text-gray-600">No courses available in this category. Please try another tab.</p>
+          </div>
+        )}
       </div>
     </section>
   )
