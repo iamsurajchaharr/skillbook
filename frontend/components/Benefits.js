@@ -25,7 +25,7 @@ export default function Benefits({ data }) {
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
             {/* Left Column - Content */}
             <div>
-              <span className="text-sm font-semibold text-red-600 uppercase tracking-wide mb-2 block">
+              <span className="text-sm font-semibold text-coral-red uppercase tracking-wide mb-2 block">
                 EXPLORE
               </span>
               <h2 className="text-3xl lg:text-4xl font-bold text-gray-900 mb-6">
@@ -55,15 +55,15 @@ export default function Benefits({ data }) {
                     description: 'Optimizes workflows and reduces waste to improve overall team performance.'
                   }
                 ].map((benefit, idx) => (
-                  <div key={idx} className="benefit-item opacity-0">
+                  <div key={idx} className="benefit-item opacity-100">
                     <h3 className="font-bold text-lg text-gray-900 mb-2">
                       {benefit.title}:
                     </h3>
                     <p className="text-gray-600 leading-relaxed">
                       {benefit.description}
                     </p>
-                    {idx < 3 && (
-                      <div className="w-16 h-px bg-red-600 mt-4"></div>
+                    {idx === 0 && (
+                      <div className="w-16 h-px bg-coral-red mt-4"></div>
                     )}
                   </div>
                 ))}
@@ -124,7 +124,7 @@ export default function Benefits({ data }) {
           {/* Left Column - Content */}
           <div>
             {data.category && (
-              <span className="text-sm font-semibold text-red-600 uppercase tracking-wide mb-2 block">
+              <span className="text-sm font-semibold text-coral-red uppercase tracking-wide mb-2 block">
                 {data.category}
               </span>
             )}
@@ -138,15 +138,17 @@ export default function Benefits({ data }) {
             {/* Benefits List */}
             <div className="space-y-6">
               {data.benefits && data.benefits.map((benefit, idx) => (
-                <div key={idx} className="benefit-item opacity-0">
+                <div key={idx} className="benefit-item opacity-100">
                   <h3 className="font-bold text-lg text-gray-900 mb-2">
-                    {benefit.title}:
+                    {typeof benefit === 'string' ? benefit : benefit.title}:
                   </h3>
-                  <p className="text-gray-600 leading-relaxed">
-                    {benefit.description}
-                  </p>
-                  {idx < data.benefits.length - 1 && (
-                    <div className="w-16 h-px bg-red-600 mt-4"></div>
+                  {typeof benefit === 'object' && benefit.description && (
+                    <p className="text-gray-600 leading-relaxed">
+                      {benefit.description}
+                    </p>
+                  )}
+                  {idx === 0 && (
+                    <div className="w-16 h-px bg-coral-red mt-4"></div>
                   )}
                 </div>
               ))}

@@ -3,9 +3,21 @@ import { urlFor } from '../utils/imageBuilder'
 import { motion } from 'framer-motion'
 
 const SafePromotion = ({ data }) => {
-  if (!data) return null
+  // Debug logging
+  console.log('SafePromotion data:', data)
+  
+  if (!data) {
+    console.log('SafePromotion: No data provided')
+    return null
+  }
 
   const { logo, logoSubtext, headline, ctaButton, benefits } = data
+  
+  // Check if required fields are present
+  if (!headline || !ctaButton || !benefits || benefits.length === 0) {
+    console.log('SafePromotion: Missing required fields', { headline, ctaButton, benefits })
+    return null
+  }
 
   const containerVariants = {
     hidden: { opacity: 0 },

@@ -5,16 +5,20 @@ import anime from 'animejs'
 export default function WhyAdoptSafe({ data }) {
   const sectionRef = useRef()
 
+  // Debug logging
+  console.log('WhyAdoptSafe data:', data)
+  console.log('Benefits:', data?.benefits)
+
   useEffect(() => {
     if (sectionRef.current) {
-      anime({
-        targets: sectionRef.current.querySelectorAll('.benefit-item'),
-        opacity: [0,1],
-        translateX: [-20,0],
-        delay: anime.stagger(200),
-        duration: 800,
-        easing: 'easeOutExpo'
-      })
+      // anime({
+      //   targets: sectionRef.current.querySelectorAll('.benefit-item'),
+      //   opacity: [0,1],
+      //   translateX: [-20,0],
+      //   delay: anime.stagger(200),
+      //   duration: 800,
+      //   easing: 'easeOutExpo'
+      // })
     }
   }, [data])
 
@@ -69,7 +73,7 @@ export default function WhyAdoptSafe({ data }) {
                   'Increases transparency and accountability, helping teams stay focused on delivering results.',
                   'Minimizes risk by improving communication and reducing dependencies between teams.'
                 ].map((benefit, idx) => (
-                  <div key={idx} className="benefit-item opacity-0 bg-gray-50 border border-gray-200 rounded-lg p-4">
+                  <div key={idx} className="benefit-item opacity-100 bg-gray-50 border border-gray-200 rounded-lg p-4">
                     <div className="flex items-start space-x-3">
                       <div className="w-5 h-5 bg-red-500 rounded-full flex-shrink-0 mt-0.5"></div>
                       <p className="text-gray-700 leading-relaxed">
@@ -162,11 +166,11 @@ export default function WhyAdoptSafe({ data }) {
             {/* Benefits List */}
             <div className="space-y-4">
               {data.benefits && data.benefits.map((benefit, idx) => (
-                <div key={idx} className="benefit-item opacity-0 bg-gray-50 border border-gray-200 rounded-lg p-4">
+                <div key={idx} className="benefit-item opacity-100 bg-gray-50 border border-gray-200 rounded-lg p-4">
                   <div className="flex items-start space-x-3">
                     <div className="w-5 h-5 bg-red-500 rounded-full flex-shrink-0 mt-0.5"></div>
                     <p className="text-gray-700 leading-relaxed">
-                      {benefit.text}
+                      {typeof benefit === 'string' ? benefit : (benefit.text || benefit)}
                     </p>
                   </div>
                 </div>

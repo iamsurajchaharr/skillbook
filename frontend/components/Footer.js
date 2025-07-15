@@ -3,9 +3,28 @@ import { urlFor } from '../utils/imageBuilder'
 import { motion } from 'framer-motion'
 
 const Footer = ({ data }) => {
-  if (!data) return null
+  if (!data) {
+    return (
+      <footer className="bg-gray-900 text-white">
+        <div className="container mx-auto px-4 py-12">
+          <div className="text-center">
+            <h3 className="text-xl font-bold mb-4">Skillbook Academy</h3>
+            <p className="text-gray-400">Footer data not loaded. Please check Sanity Studio.</p>
+          </div>
+        </div>
+      </footer>
+    )
+  }
 
   const { logo, logoText, socialMedia, paymentMethods, sslText, contactInfo, navigationLinks } = data
+
+  // Add fallbacks for missing data
+  const safeLogoText = logoText || { skillbook: 'Skillbook', academy: 'Academy' }
+  const safeSocialMedia = socialMedia || []
+  const safePaymentMethods = paymentMethods || []
+  const safeSslText = sslText || 'This site is SSL SECURED'
+  const safeContactInfo = contactInfo || { phoneNumbers: [], email: 'support@skillbook.com' }
+  const safeNavigationLinks = navigationLinks || { courses: [], company: [], resources: [] }
 
   const getSocialIcon = (platform) => {
     const icons = {
@@ -112,9 +131,9 @@ const Footer = ({ data }) => {
                   />
                 )}
                 <div className="flex items-baseline space-x-1">
-                  <span className="text-2xl font-bold">{logoText?.skillbook}</span>
+                  <span className="text-2xl font-bold">{safeLogoText.skillbook}</span>
                   <span className="text-2xl font-bold">
-                    {logoText?.academy?.split('').map((char, index) => (
+                    {safeLogoText.academy?.split('').map((char, index) => (
                       <span key={index} className={char === 'A' ? 'text-red-500' : ''}>
                         {char}
                       </span>
@@ -125,7 +144,7 @@ const Footer = ({ data }) => {
 
               {/* Social Media */}
               <div className="flex space-x-4">
-                {socialMedia?.map((social, index) => (
+                {safeSocialMedia.map((social, index) => (
                   <a
                     key={index}
                     href={social.url}
@@ -145,7 +164,7 @@ const Footer = ({ data }) => {
               <div>
                 <h4 className="text-lg font-semibold mb-4">We Accept:</h4>
                 <div className="flex flex-wrap gap-3">
-                  {paymentMethods?.map((payment, index) => (
+                  {safePaymentMethods.map((payment, index) => (
                     <div
                       key={index}
                       className="border border-white rounded px-3 py-2 bg-white"
@@ -167,7 +186,7 @@ const Footer = ({ data }) => {
                 <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
                   <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
                 </svg>
-                <span className="text-sm font-medium">{sslText}</span>
+                <span className="text-sm font-medium">{safeSslText}</span>
               </div>
             </motion.div>
 
@@ -184,7 +203,7 @@ const Footer = ({ data }) => {
                 <div>
                   <h4 className="text-lg font-semibold mb-4">Pre Registration Enquiry</h4>
                   <div className="space-y-2">
-                    {contactInfo?.phoneNumbers?.map((phone, index) => (
+                    {safeContactInfo.phoneNumbers?.map((phone, index) => (
                       <div key={index} className="flex items-center space-x-2">
                         <svg className="w-4 h-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" />
@@ -197,7 +216,7 @@ const Footer = ({ data }) => {
                       <svg className="w-4 h-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 8l7.89 4.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
                       </svg>
-                      <span className="text-sm">{contactInfo?.email}</span>
+                      <span className="text-sm">{safeContactInfo.email}</span>
                     </div>
                   </div>
                 </div>
@@ -206,7 +225,7 @@ const Footer = ({ data }) => {
                 <div>
                   <h4 className="text-lg font-semibold mb-4">Post Registration Support</h4>
                   <div className="space-y-2">
-                    {contactInfo?.phoneNumbers?.map((phone, index) => (
+                    {safeContactInfo.phoneNumbers?.map((phone, index) => (
                       <div key={index} className="flex items-center space-x-2">
                         <svg className="w-4 h-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" />
@@ -219,7 +238,7 @@ const Footer = ({ data }) => {
                       <svg className="w-4 h-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 8l7.89 4.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
                       </svg>
-                      <span className="text-sm">{contactInfo?.email}</span>
+                      <span className="text-sm">{safeContactInfo.email}</span>
                     </div>
                   </div>
                 </div>
@@ -236,7 +255,7 @@ const Footer = ({ data }) => {
             <div>
               <h4 className="text-lg font-semibold mb-4">Courses</h4>
               <div className="space-y-2">
-                {navigationLinks?.courses?.map((course, index) => (
+                {safeNavigationLinks.courses?.map((course, index) => (
                   <a
                     key={index}
                     href={course.url}
@@ -252,7 +271,7 @@ const Footer = ({ data }) => {
             <div>
               <h4 className="text-lg font-semibold mb-4">Our Company</h4>
               <div className="space-y-2">
-                {navigationLinks?.company?.map((link, index) => (
+                {safeNavigationLinks.company?.map((link, index) => (
                   <a
                     key={index}
                     href={link.url}
@@ -268,7 +287,7 @@ const Footer = ({ data }) => {
             <div>
               <h4 className="text-lg font-semibold mb-4">Our Resources</h4>
               <div className="space-y-2">
-                {navigationLinks?.resources?.map((link, index) => (
+                {safeNavigationLinks.resources?.map((link, index) => (
                   <a
                     key={index}
                     href={link.url}

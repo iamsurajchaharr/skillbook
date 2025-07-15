@@ -2,9 +2,34 @@ import React, { useState } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 
 const FAQContact = ({ data }) => {
-  if (!data) return null
+  if (!data) {
+    return (
+      <section className="py-16 bg-white">
+        <div className="container mx-auto px-4">
+          <div className="max-w-7xl mx-auto">
+            <div className="text-center">
+              <h3 className="text-xl font-bold mb-4">FAQ & Contact Form</h3>
+              <p className="text-gray-400">FAQ data not loaded. Please check Sanity Studio.</p>
+            </div>
+          </div>
+        </div>
+      </section>
+    )
+  }
 
   const { title, titleHighlight, faqItems, contactForm } = data
+  
+  // Add fallbacks for missing data
+  const safeTitle = title || 'Frequently Asked Questions'
+  const safeTitleHighlight = titleHighlight || 'Questions'
+  const safeFaqItems = faqItems || []
+  const safeContactForm = contactForm || {
+    title: 'Talk to our Learning Consultant',
+    greeting: 'Hello there! Hit us up with your questions.',
+    subMessage: 'We are happy to help :)',
+    submitButtonText: 'Submit',
+    courseOptions: []
+  }
   const [openFAQ, setOpenFAQ] = useState(null)
   const [formData, setFormData] = useState({
     name: '',
@@ -70,13 +95,13 @@ const FAQContact = ({ data }) => {
             >
               {/* Title */}
               <motion.h2 variants={itemVariants} className="text-3xl md:text-4xl font-bold text-gray-900 mb-8">
-                {title}{' '}
-                <span className="text-red-500">{titleHighlight}</span>
+                {safeTitle}{' '}
+                <span className="text-red-500">{safeTitleHighlight}</span>
               </motion.h2>
 
               {/* FAQ Items */}
               <div className="space-y-0">
-                {faqItems?.map((item, index) => (
+                {safeFaqItems?.map((item, index) => (
                   <motion.div
                     key={index}
                     variants={itemVariants}
@@ -148,7 +173,7 @@ const FAQContact = ({ data }) => {
                 {/* Form Header */}
                 <div className="bg-black text-white px-6 py-4 flex items-center justify-between">
                   <h3 className="text-lg font-semibold">
-                    {contactForm?.title}
+                    {safeContactForm?.title}
                   </h3>
                   <button className="text-white hover:text-gray-300 transition-colors">
                     <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -161,10 +186,10 @@ const FAQContact = ({ data }) => {
                 <div className="p-6">
                   <div className="mb-6">
                     <p className="text-gray-900 text-lg mb-2">
-                      {contactForm?.greeting}
+                      {safeContactForm?.greeting}
                     </p>
                     <p className="text-red-500 font-medium">
-                      {contactForm?.subMessage}
+                      {safeContactForm?.subMessage}
                     </p>
                   </div>
 
@@ -218,7 +243,7 @@ const FAQContact = ({ data }) => {
                         required
                       >
                         <option value="">Course Interested</option>
-                        {contactForm?.courseOptions?.map((course, index) => (
+                        {safeContactForm?.courseOptions?.map((course, index) => (
                           <option key={index} value={course}>
                             {course}
                           </option>
@@ -251,7 +276,7 @@ const FAQContact = ({ data }) => {
                       whileTap={{ scale: 0.98 }}
                       className="w-full bg-red-500 hover:bg-red-600 text-white font-semibold py-3 px-6 rounded-lg transition-all duration-300 shadow-lg hover:shadow-xl"
                     >
-                      {contactForm?.submitButtonText}
+                      {safeContactForm?.submitButtonText}
                     </motion.button>
                   </form>
                 </div>

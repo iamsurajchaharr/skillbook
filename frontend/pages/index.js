@@ -29,6 +29,7 @@ export async function getStaticProps() {
   const courses = await sanityClient.fetch(`*[_type=="course"] | order(currentPrice desc)`)
   const features = await sanityClient.fetch(`*[_type=="feature"]`)
   const testimonials = await sanityClient.fetch(`*[_type=="testimonial"]`)
+  console.log('Fetched testimonials:', testimonials)
   const coursesSection = await sanityClient.fetch(`*[_type=="coursesSection"][0]`)
   const whyChooseUsData = await sanityClient.fetch(`*[_type=="whyChooseUs"][0]`)
   const benefitsData = await sanityClient.fetch(`*[_type=="benefits"][0]`)
@@ -37,11 +38,16 @@ export async function getStaticProps() {
   const skillbookLearningExperienceData = await sanityClient.fetch(`*[_type=="skillbookLearningExperience"][0]`)
   const agileExcellenceCTAData = await sanityClient.fetch(`*[_type=="agileExcellenceCTA"][0]`)
   const industryTestimonialsData = await sanityClient.fetch(`*[_type=="industryTestimonials"][0]`)
+  console.log('Fetched industryTestimonialsData:', industryTestimonialsData)
   const clientLogosData = await sanityClient.fetch(`*[_type=="clientLogos"][0]`)
+  console.log('Fetched clientLogosData:', clientLogosData)
   const skillbookBlogData = await sanityClient.fetch(`*[_type=="skillbookBlog"][0]`)
+  console.log('Fetched skillbookBlogData:', skillbookBlogData)
   const safePromotionData = await sanityClient.fetch(`*[_type=="safePromotion"][0]`)
+  console.log('Fetched safePromotionData:', safePromotionData)
   const careerCTAData = await sanityClient.fetch(`*[_type=="careerCTA"][0]`)
   const faqContactData = await sanityClient.fetch(`*[_type=="faqContact"][0]`)
+
   const accreditationsData = await sanityClient.fetch(`*[_type=="accreditation"][0]`)
   const learningExperience = await sanityClient.fetch(`*[_type=="learningExperience"][0]`)
   const footerData = await sanityClient.fetch(`*[_type=="footer"][0]`)
@@ -71,6 +77,8 @@ export default function Home(props) {
       <FeaturesStrip data={props.featuresStripData} />
       <CoursesGrid courses={props.courses} section={props.coursesSection} />
       <Features items={props.features} />
+      <WhyChooseUs data={props.whyChooseUsData} />
+      <Benefits data={props.benefitsData} />
       <WhyAdoptSafe data={props.whyAdoptSafeData} />
       <FrameworkDiagramSection data={props.frameworkDiagramSectionData} />
       <SkillbookLearningExperience data={props.skillbookLearningExperienceData} />
@@ -78,14 +86,10 @@ export default function Home(props) {
       <IndustryTestimonials data={props.industryTestimonialsData} />
       <ClientLogos data={props.clientLogosData} />
       <SkillbookBlog data={props.skillbookBlogData} />
+      <Accreditations data={props.accreditationsData} />
       <SafePromotion data={props.safePromotionData} />
       <CareerCTA data={props.careerCTAData} />
       <FAQContact data={props.faqContactData} />
-      <WhyChooseUs data={props.whyChooseUsData} />
-      <Benefits data={props.benefitsData} />
-      <LearningExperience data={props.learningExperience} />
-      <Testimonials items={props.testimonials} />
-      <Accreditations data={props.accreditationsData} />
       <Footer data={props.footerData} />
     </>
   )

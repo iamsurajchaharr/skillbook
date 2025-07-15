@@ -7,22 +7,22 @@ export default function SkillbookLearningExperience({ data }) {
 
   useEffect(() => {
     if (sectionRef.current) {
-      anime({
-        targets: sectionRef.current.querySelectorAll('.benefit-item'),
-        opacity: [0,1],
-        translateX: [-20,0],
-        delay: anime.stagger(200),
-        duration: 800,
-        easing: 'easeOutExpo'
-      })
+      // anime({
+      //   targets: sectionRef.current.querySelectorAll('.benefit-item'),
+      //   opacity: [0,1],
+      //   translateX: [-20,0],
+      //   delay: anime.stagger(200),
+      //   duration: 800,
+      //   easing: 'easeOutExpo'
+      // })
     }
   }, [data])
 
   if (!data) {
     return (
       <section className="py-16 bg-white">
-        <div className="container mx-auto px-6">
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+        <div className="container mx-auto px-6 max-w-6xl">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 items-center">
             {/* Left Column - Content */}
             <div>
               <h2 className="text-3xl lg:text-4xl font-bold text-gray-900 mb-6">
@@ -33,14 +33,14 @@ export default function SkillbookLearningExperience({ data }) {
               </p>
               
               {/* CTA Button */}
-              <div className="text-center mb-4">
+              <div className="mb-4">
                 <button className="bg-red-500 hover:bg-red-600 text-white font-bold py-3 px-8 rounded-lg transition-colors duration-300">
                   Register Now
                 </button>
               </div>
               
               {/* Discount Info */}
-              <div className="text-center mb-8">
+              <div className="mb-8">
                 <p className="text-sm text-gray-600">
                   Save <span className="font-bold">$500</span> with <span className="text-orange-500">Early Bird Tickets</span>
                 </p>
@@ -54,7 +54,7 @@ export default function SkillbookLearningExperience({ data }) {
                   'Highly interactive workshops and curated course materials',
                   'Rated 5-star reviews on Google and Trustpilot'
                 ].map((benefit, idx) => (
-                  <div key={idx} className="benefit-item opacity-0 bg-white border border-gray-200 rounded-lg p-4 shadow-sm">
+                  <div key={idx} className="benefit-item opacity-100 bg-white border border-gray-200 rounded-lg p-4 shadow-sm">
                     <div className="flex items-start space-x-3">
                       <div className="w-6 h-6 bg-red-500 rounded-full flex-shrink-0 mt-0.5 flex items-center justify-center">
                         <svg className="w-3 h-3 text-white" fill="currentColor" viewBox="0 0 20 20">
@@ -133,8 +133,8 @@ export default function SkillbookLearningExperience({ data }) {
 
   return (
     <section className={`py-16 ${getBackgroundColor(data.backgroundColor)}`} ref={sectionRef}>
-      <div className="container mx-auto px-6">
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+      <div className="container mx-auto px-6 max-w-6xl">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 items-center">
           {/* Left Column - Content */}
           <div>
             <h2 className={`text-3xl lg:text-4xl font-bold mb-6 ${getTextColor(data.textColor)}`}>
@@ -146,7 +146,7 @@ export default function SkillbookLearningExperience({ data }) {
             
             {/* CTA Button */}
             {data.ctaButton && (
-              <div className="text-center mb-4">
+              <div className="mb-4">
                 <a 
                   href={data.ctaButton.link || '#'}
                   className={`${getButtonColor(data.ctaButton.backgroundColor)} text-white font-bold py-3 px-8 rounded-lg transition-colors duration-300 inline-block`}
@@ -158,21 +158,9 @@ export default function SkillbookLearningExperience({ data }) {
             
             {/* Discount Info */}
             {data.discountInfo && (
-              <div className="text-center mb-8">
+              <div className="mb-8">
                 <p className="text-sm text-gray-600">
-                  {data.discountInfo.text ? (
-                    data.discountInfo.text.replace(
-                      data.discountInfo.amount,
-                      `<span class="font-bold">${data.discountInfo.amount}</span>`
-                    ).replace(
-                      'Early Bird Tickets',
-                      '<span class="text-orange-500">Early Bird Tickets</span>'
-                    )
-                  ) : (
-                    <>
-                      Save <span className="font-bold">{data.discountInfo.amount || '$500'}</span> with <span className="text-orange-500">Early Bird Tickets</span>
-                    </>
-                  )}
+                  Save <span className="font-bold">{data.discountInfo.amount || '$500'}</span> with <span className="text-orange-500">Early Bird Tickets</span>
                 </p>
               </div>
             )}
@@ -180,7 +168,7 @@ export default function SkillbookLearningExperience({ data }) {
             {/* Benefits List */}
             <div className="space-y-4">
               {data.benefits && data.benefits.map((benefit, idx) => (
-                <div key={idx} className="benefit-item opacity-0 bg-white border border-gray-200 rounded-lg p-4 shadow-sm">
+                <div key={idx} className="benefit-item opacity-100 bg-white border border-gray-200 rounded-lg p-4 shadow-sm">
                   <div className="flex items-start space-x-3">
                     {benefit.icon ? (
                       <img

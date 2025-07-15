@@ -27,31 +27,31 @@ export default function CoursesGrid({ courses, section }) {
     return courses.filter(course => course.category === activeTab);
   }, [courses, activeTab]);
 
-  if (!courses || courses.length === 0) {
+    if (!courses || courses.length === 0) {
     return (
-      <section className="py-16 bg-gray-50">
-        <div className="container mx-auto px-6">
+      <section className="py-12 bg-gray-50">
+        <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
           {/* Header */}
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-12">
-            <div>
-              <h2 className="text-3xl lg:text-4xl font-bold text-gray-900 mb-4">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-10">
+            <div className="flex items-center">
+              <h2 className="text-2xl lg:text-3xl font-bold text-gray-900">
                 {heading}
               </h2>
             </div>
-            <div className="flex items-start">
-              <p className="text-lg text-gray-600 leading-relaxed">
+            <div className="flex items-center">
+              <p className="text-base lg:text-lg text-gray-600 leading-relaxed">
                 {description}
               </p>
             </div>
           </div>
           
           {/* Tabs */}
-          <div className="flex space-x-8 mb-8 border-b border-gray-200">
+          <div className="flex justify-start space-x-6 mb-8 border-b border-gray-200">
             {tabs.map((tab) => (
               <button
                 key={tab.value}
                 onClick={() => setActiveTab(tab.value)}
-                className={`pb-4 px-1 font-medium text-lg transition-colors duration-200 ${
+                className={`pb-3 px-2 font-medium text-base transition-colors duration-200 ${
                   activeTab === tab.value
                     ? 'text-red-600 border-b-2 border-red-600'
                     : 'text-gray-500 hover:text-gray-700'
@@ -62,7 +62,7 @@ export default function CoursesGrid({ courses, section }) {
             ))}
           </div>
           
-          <div className="text-center py-12">
+          <div className="text-center py-8">
             <p className="text-gray-600">No courses available at the moment. Check back soon!</p>
           </div>
         </div>
@@ -71,29 +71,29 @@ export default function CoursesGrid({ courses, section }) {
   }
 
   return (
-    <section className="py-16 bg-gray-50">
-      <div className="container mx-auto px-6">
+    <section className="py-12 bg-gray-50">
+      <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Header */}
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-12">
-          <div>
-            <h2 className="text-3xl lg:text-4xl font-bold text-gray-900 mb-4">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-10">
+          <div className="flex items-center">
+            <h2 className="text-2xl lg:text-3xl font-bold text-gray-900">
               {heading}
             </h2>
           </div>
-          <div className="flex items-start">
-            <p className="text-lg text-gray-600 leading-relaxed">
+          <div className="flex items-center">
+            <p className="text-base lg:text-lg text-gray-600 leading-relaxed">
               {description}
             </p>
           </div>
         </div>
         
         {/* Tabs */}
-        <div className="flex space-x-8 mb-8 border-b border-gray-200">
+        <div className="flex justify-start space-x-6 mb-8 border-b border-gray-200">
           {tabs.map((tab) => (
             <button
               key={tab.value}
               onClick={() => setActiveTab(tab.value)}
-              className={`pb-4 px-1 font-medium text-lg transition-colors duration-200 ${
+              className={`pb-3 px-2 font-medium text-base transition-colors duration-200 ${
                 activeTab === tab.value
                   ? 'text-red-600 border-b-2 border-red-600'
                   : 'text-gray-500 hover:text-gray-700'
@@ -105,7 +105,7 @@ export default function CoursesGrid({ courses, section }) {
         </div>
         
         {/* Course Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           {filteredCourses.map(course => (
             <CourseCard key={course._id} course={course} />
           ))}
@@ -113,7 +113,7 @@ export default function CoursesGrid({ courses, section }) {
         
         {/* Show message if no courses in selected category */}
         {filteredCourses.length === 0 && (
-          <div className="text-center py-12">
+          <div className="text-center py-8">
             <p className="text-gray-600">No courses available in this category. Please try another tab.</p>
           </div>
         )}

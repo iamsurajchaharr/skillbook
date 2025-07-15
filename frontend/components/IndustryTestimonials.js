@@ -3,6 +3,12 @@ import { urlFor } from '../utils/imageBuilder'
 import anime from 'animejs'
 
 export default function IndustryTestimonials({ data }) {
+  // Debug logging
+  console.log('IndustryTestimonials data:', data)
+  console.log('IndustryTestimonials data type:', typeof data)
+  console.log('IndustryTestimonials testimonials:', data?.testimonials)
+  console.log('IndustryTestimonials testimonials length:', data?.testimonials?.length)
+  
   const [currentIndex, setCurrentIndex] = useState(0)
   const [isAutoPlaying, setIsAutoPlaying] = useState(true)
   const carouselRef = useRef()
@@ -118,7 +124,7 @@ export default function IndustryTestimonials({ data }) {
           <div className="relative">
             <div className="flex space-x-6 overflow-hidden">
               {[1, 2, 3].map((_, idx) => (
-                <div key={idx} className="testimonial-card opacity-0 flex-shrink-0 w-full md:w-1/3 bg-white rounded-lg shadow-lg p-6">
+                <div key={idx} className="testimonial-card opacity-100 flex-shrink-0 w-full md:w-1/3 bg-white rounded-lg shadow-lg p-6">
                   {renderStars(5, 'orange')}
                   <p className="text-lg font-bold text-gray-900 mb-4">
                     "Information-packed and relevant to my work. The two-day session was packed with information and included opportunities for small group discussion and collaborative problem-solving."
@@ -185,7 +191,7 @@ export default function IndustryTestimonials({ data }) {
             {testimonials.map((testimonial, idx) => (
               <div
                 key={idx}
-                className={`testimonial-card opacity-0 flex-shrink-0 w-full md:w-1/${cardsToShow} bg-white ${getCardStyle(data.cardStyle)} p-6 transition-transform duration-500`}
+                className={`testimonial-card opacity-100 flex-shrink-0 w-full md:w-1/${cardsToShow} bg-white ${getCardStyle(data.cardStyle)} p-6 transition-transform duration-500`}
                 style={{
                   transform: `translateX(-${currentIndex * (100 / cardsToShow)}%)`
                 }}
