@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react'
 import { urlFor } from '../utils/imageBuilder'
 import anime from 'animejs'
+import { AnimatedStaggerContainer, AnimatedItem } from './PageAnimations'
 
 export default function SkillbookBlog({ data }) {
   // Debug logging
@@ -16,6 +17,7 @@ export default function SkillbookBlog({ data }) {
   const [isAutoPlaying, setIsAutoPlaying] = useState(true)
   const carouselRef = useRef()
   const autoPlayRef = useRef()
+  const sectionRef = useRef()
 
   useEffect(() => {
     if (sectionRef.current) {
@@ -133,7 +135,7 @@ export default function SkillbookBlog({ data }) {
   if (!data.blogPosts || data.blogPosts.length === 0) {
     console.log('SkillbookBlog: No blog posts found, showing fallback')
     return (
-      <section className={`py-16 ${getSectionBackground(data.backgroundColor)}`}>
+      <section className={`py-16 ${getSectionBackground(data.backgroundColor)}`} ref={sectionRef}>
         <div className="container mx-auto px-6">
           {/* Header */}
           <div className="text-center mb-12">
@@ -185,8 +187,6 @@ export default function SkillbookBlog({ data }) {
       </section>
     )
   }
-
-  const sectionRef = useRef()
   
   // Handle different possible data structures
   let blogPosts = data.blogPosts || []
@@ -249,55 +249,12 @@ export default function SkillbookBlog({ data }) {
 
         {/* Blog Cards Carousel */}
         <div className="relative mb-8">
-          <div className="flex space-x-6 overflow-hidden" ref={carouselRef}>
-            {blogPosts.map((post, idx) => (
-              <div
-                key={idx}
-                className={`blog-card opacity-100 flex-shrink-0 w-full md:w-1/${Math.max(1, cardsToShow)} bg-white ${getCardStyle(data.cardStyle)} overflow-hidden transition-transform duration-500`}
-                style={{
-                  transform: blogPosts.length > cardsToShow ? `translateX(-${currentIndex * (100 / cardsToShow)}%)` : 'none'
-                }}
-              >
-                <div className="h-48 bg-gray-200 overflow-hidden">
-                  {post.image ? (
-                    <img
-                      src={urlFor(post.image).width(400).height(200).url()}
-                      alt={post.title}
-                      className="w-full h-full object-cover"
-                    />
-                  ) : (
-                    <div className="w-full h-full bg-gradient-to-br from-gray-300 to-gray-400"></div>
-                  )}
-                </div>
-                <div className="p-6">
-                  {post.category && (
-                    <span className={`inline-block ${getCategoryColor(post.categoryColor)} text-white text-xs px-3 py-1 rounded-full mb-3`}>
-                      {post.category}
-                    </span>
-                  )}
-                  <h3 className="text-xl font-bold text-gray-900 mb-3">
-                    {post.title || 'Benefits of a Scrummaster Certification'}
-                  </h3>
-                  <p className="text-gray-600 mb-4">
-                    {post.description || 'Scrum is a widely implemented agile framework for developing, delivering, and sustaining products in complex environments.'}
-                  </p>
-                  <a 
-                    href={post.link || '#'} 
-                    className="text-red-500 font-medium hover:text-red-600 transition-colors"
-                  >
-                    {post.readMoreText || 'Read →'}
-                  </a>
-                </div>
-              </div>
-            ))}
-          </div>
-
           {/* Navigation Arrows */}
           {data.carouselSettings?.showArrows && blogPosts.length > cardsToShow && (
             <>
               <button
                 onClick={handlePrev}
-                className="absolute left-4 top-1/2 transform -translate-y-1/2 z-10 bg-gray-200 rounded-full p-3 hover:bg-gray-300 transition-colors"
+                className="absolute left-4 top-1/2 transform -translate-y-1/2 z-10 bg-white rounded-full p-3 shadow-lg hover:shadow-xl transition-shadow duration-300"
               >
                 <svg className="w-6 h-6 text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
@@ -305,14 +262,66 @@ export default function SkillbookBlog({ data }) {
               </button>
               <button
                 onClick={handleNext}
-                className="absolute right-4 top-1/2 transform -translate-y-1/2 z-10 bg-black rounded-full p-3 hover:bg-gray-800 transition-colors"
+                className="absolute right-4 top-1/2 transform -translate-y-1/2 z-10 bg-white rounded-full p-3 shadow-lg hover:shadow-xl transition-shadow duration-300"
               >
-                <svg className="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <svg className="w-6 h-6 text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
                 </svg>
               </button>
             </>
           )}
+
+          {/* Carousel Container */}
+          <div className="overflow-hidden" ref={carouselRef}>
+            <div 
+              className="flex transition-transform duration-500 ease-in-out"
+              style={{
+                transform: blogPosts.length > cardsToShow ? `translateX(-${currentIndex * (100 / cardsToShow)}%)` : 'none',
+                width: blogPosts.length > cardsToShow ? `${(blogPosts.length / cardsToShow) * 100}%` : '100%'
+              }}
+            >
+              {blogPosts.map((post, idx) => (
+                <div
+                  key={idx}
+                  className={`blog-card opacity-100 flex-shrink-0 bg-white ${getCardStyle(data.cardStyle)} overflow-hidden mx-3`}
+                  style={{
+                    width: blogPosts.length > cardsToShow ? `${100 / blogPosts.length}%` : `${100 / cardsToShow}%`
+                  }}
+                >
+                  <div className="h-48 bg-gray-200 overflow-hidden relative">
+                    {post.image ? (
+                      <img
+                        src={urlFor(post.image).width(400).height(200).url()}
+                        alt={post.title}
+                        className="w-full h-full object-cover"
+                      />
+                    ) : (
+                      <div className="w-full h-full bg-gradient-to-br from-gray-300 to-gray-400"></div>
+                    )}
+                  </div>
+                  <div className="p-6">
+                    {post.category && (
+                      <span className={`inline-block ${getCategoryColor(post.categoryColor)} text-white text-xs px-3 py-1 rounded-full mb-3`}>
+                        {post.category}
+                      </span>
+                    )}
+                    <h3 className="text-xl font-bold text-gray-900 mb-3">
+                      {post.title || 'Benefits of a Scrummaster Certification'}
+                    </h3>
+                    <p className="text-gray-600 mb-4">
+                      {post.description || 'Scrum is a widely implemented agile framework for developing, delivering, and sustaining products in complex environments.'}
+                    </p>
+                    <a 
+                      href={post.link || '#'} 
+                      className="text-red-500 font-medium hover:text-red-600 transition-colors"
+                    >
+                      {post.readMoreText || 'Read →'}
+                    </a>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
         </div>
 
         {/* Pagination Dots */}
@@ -323,7 +332,7 @@ export default function SkillbookBlog({ data }) {
                 key={idx}
                 onClick={() => handleDotClick(idx)}
                 className={`w-3 h-3 rounded-full transition-colors duration-300 ${
-                  idx === currentIndex ? 'bg-black' : 'bg-gray-300'
+                  idx === currentIndex ? 'bg-red-500' : 'bg-gray-300'
                 }`}
               />
             ))}

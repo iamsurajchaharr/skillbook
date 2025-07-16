@@ -1,6 +1,7 @@
 import React, { useEffect, useRef } from 'react'
 import { urlFor } from '../utils/imageBuilder'
 import anime from 'animejs'
+import { AnimatedStaggerContainer, AnimatedItem } from './PageAnimations'
 
 export default function WhyChooseUs({ data }) {
   const sectionRef = useRef()
@@ -48,18 +49,24 @@ export default function WhyChooseUs({ data }) {
     return (
       <section className="py-16 bg-white">
         <div className="container mx-auto px-6">
-          <div className="text-center mb-12">
-            <span className="text-sm font-semibold text-coral-red uppercase tracking-wide mb-2 block">
-              EXPLORE
-            </span>
-            <h2 className="text-3xl lg:text-4xl font-bold text-gray-900 mb-6">
-              Why SAFe®?
-            </h2>
-            <p className="text-lg text-gray-600 max-w-4xl mx-auto leading-relaxed">
-              Organizations often face challenges as they scale, especially in coordinating efforts across multiple teams. SAFe® bridges this gap by creating a common framework that fosters flexibility and collaboration across all levels. With its structured approach to planning, SAFe® enables:
-            </p>
+          <div className="flex flex-row items-start justify-center gap-8 max-w-7xl mx-auto mb-12">
+            {/* Left Column - Title */}
+            <div className="w-1/2">
+              <span className="text-sm font-semibold text-coral-red uppercase tracking-wide mb-2 block">
+                EXPLORE
+              </span>
+              <h2 className="text-3xl lg:text-4xl font-bold text-gray-900 mb-6">
+                Why SAFe®?
+              </h2>
+            </div>
+            {/* Right Column - Description */}
+            <div className="w-1/2">
+              <p className="text-lg text-gray-600 leading-relaxed">
+                Organizations often face challenges as they scale, especially in coordinating efforts across multiple teams. SAFe® bridges this gap by creating a common framework that fosters flexibility and collaboration across all levels. With its structured approach to planning, SAFe® enables:
+              </p>
+            </div>
           </div>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+          <AnimatedStaggerContainer className="grid grid-cols-1 md:grid-cols-3 gap-8">
             {[
               {
                 title: 'Seamless integration between teams',
@@ -77,29 +84,27 @@ export default function WhyChooseUs({ data }) {
                 icon: null
               }
             ].map((benefit, idx) => (
-              <div key={idx} className="benefit-card bg-white rounded-xl shadow-lg p-6 border border-gray-100 hover:shadow-xl transition-all duration-300 opacity-100 transform hover:-translate-y-1">
-                {benefit.icon ? (
-                  <img
-                    src={urlFor(benefit.icon).width(80).height(80).url()}
-                    alt={benefit.title}
-                    className="w-20 h-20 mb-6 mx-auto object-contain"
-                  />
-                ) : (
-                  <div className="w-20 h-20 bg-gradient-to-br from-red-100 to-red-200 rounded-xl mb-6 mx-auto flex items-center justify-center">
-                    <div className="w-10 h-10 bg-coral-red rounded-lg"></div>
+              <AnimatedItem key={idx}>
+                <div className="benefit-card relative h-[500px] rounded-xl shadow-lg overflow-hidden hover:shadow-xl transition-all duration-300 opacity-100 transform hover:-translate-y-1">
+                  {/* Background Image */}
+                  <div className="absolute inset-0 bg-gradient-to-br from-red-100 to-red-200">
+                    <div className="w-full h-full bg-coral-red opacity-20"></div>
                   </div>
-                )}
-                <h3 className="text-lg font-bold text-gray-900 mb-3 text-center leading-tight">
-                  {benefit.title}
-                </h3>
-                {benefit.description && (
-                  <p className="text-gray-600 text-center leading-relaxed text-sm">
-                    {benefit.description}
-                  </p>
-                )}
-              </div>
+                  {/* Overlay Text */}
+                  <div className="absolute bottom-0 left-0 p-6 text-left">
+                    <h3 className="text-3xl font-bold text-white mb-3 leading-tight drop-shadow-lg">
+                      {benefit.title}
+                    </h3>
+                    {benefit.description && (
+                      <p className="text-white text-xl leading-relaxed drop-shadow-lg">
+                        {benefit.description}
+                      </p>
+                    )}
+                  </div>
+                </div>
+              </AnimatedItem>
             ))}
-          </div>
+          </AnimatedStaggerContainer>
         </div>
       </section>
     )
@@ -111,46 +116,56 @@ export default function WhyChooseUs({ data }) {
     <section className={`py-16 ${getSectionBackground(data.backgroundColor)}`} ref={sectionRef}>
       <div className="container mx-auto px-6">
         {/* Header */}
-        <div className="text-center mb-12">
-          {data.sectionType === 'why-choose-us' && (
-            <span className={`text-sm font-semibold ${getCategoryColor(data.sectionType)} uppercase tracking-wide mb-2 block`}>
-              EXPLORE
-            </span>
-          )}
-          <h2 className="text-3xl lg:text-4xl font-bold text-gray-900 mb-6">
-            {data.title || (isStepSection ? 'Our Process' : 'Why SAFe®?')}
-          </h2>
-          <p className="text-lg text-gray-600 max-w-4xl mx-auto leading-relaxed">
-            {data.description || (isStepSection 
-              ? 'Follow our proven process to implement SAFe® successfully in your organization.' 
-              : 'Discover the key benefits and advantages of implementing the Scaled Agile Framework in your organization. SAFe® provides proven methodologies that drive success in large-scale Agile transformations.'
+        <div className="flex flex-row items-start justify-center gap-8 max-w-7xl mx-auto mb-12">
+          {/* Left Column - Title */}
+          <div className="w-1/2">
+            {data.sectionType === 'why-choose-us' && (
+              <span className={`text-sm font-semibold ${getCategoryColor(data.sectionType)} uppercase tracking-wide mb-2 block`}>
+                EXPLORE
+              </span>
             )}
-          </p>
+            <h2 className="text-3xl lg:text-4xl font-bold text-gray-900 mb-6">
+              {data.title || (isStepSection ? 'Our Process' : 'Why SAFe®?')}
+            </h2>
+          </div>
+          {/* Right Column - Description */}
+          <div className="w-1/2">
+            <p className="text-lg text-gray-600 leading-relaxed">
+              {data.description || (isStepSection 
+                ? 'Follow our proven process to implement SAFe® successfully in your organization.' 
+                : 'Discover the key benefits and advantages of implementing the Scaled Agile Framework in your organization. SAFe® provides proven methodologies that drive success in large-scale Agile transformations.'
+              )}
+            </p>
+          </div>
         </div>
 
         {/* Benefits/Steps Grid */}
         <div className={`grid ${getLayoutClass(data.layout)} gap-8`}>
           {data.reasons && data.reasons.map((reason, idx) => (
-            <div key={idx} className="benefit-card bg-white rounded-xl shadow-lg p-6 border border-gray-100 hover:shadow-xl transition-all duration-300 opacity-100 transform hover:-translate-y-1">
+            <div key={idx} className="benefit-card relative h-[500px] rounded-xl shadow-lg overflow-hidden hover:shadow-xl transition-all duration-300 opacity-100 transform hover:-translate-y-1">
+              {/* Background Image */}
               {reason.icon ? (
                 <img
-                  src={urlFor(reason.icon).width(80).height(80).url()}
+                  src={urlFor(reason.icon).width(350).height(500).url()}
                   alt={typeof reason === 'string' ? reason : reason.text}
-                  className="w-20 h-20 mb-6 mx-auto object-contain"
+                  className="absolute inset-0 w-full h-full object-cover"
                 />
               ) : (
-                <div className="w-20 h-20 bg-gradient-to-br from-red-100 to-red-200 rounded-xl mb-6 mx-auto flex items-center justify-center">
-                  <div className="w-10 h-10 bg-coral-red rounded-lg"></div>
+                <div className="absolute inset-0 bg-gradient-to-br from-red-100 to-red-200">
+                  <div className="w-full h-full bg-coral-red opacity-20"></div>
                 </div>
               )}
-              <h3 className="text-lg font-bold text-gray-900 mb-3 text-center leading-tight">
-                {typeof reason === 'string' ? reason : reason.text}
-              </h3>
-              {reason.description && (
-                <p className="text-gray-600 text-center leading-relaxed text-sm">
-                  {reason.description}
-                </p>
-              )}
+              {/* Overlay Text */}
+              <div className="absolute bottom-0 left-0 p-6 text-left">
+                <h3 className="text-3xl font-bold text-white mb-3 leading-tight drop-shadow-lg">
+                  {typeof reason === 'string' ? reason : reason.text}
+                </h3>
+                {reason.description && (
+                  <p className="text-white text-xl leading-relaxed drop-shadow-lg">
+                    {reason.description}
+                  </p>
+                )}
+              </div>
             </div>
           ))}
         </div>

@@ -20,16 +20,16 @@ export default function AgileExcellenceCTA({ data }) {
 
   if (!data) {
     return (
-      <section className="relative py-20 bg-gray-900 rounded-2xl overflow-hidden max-w-6xl mx-auto my-8">
+      <section className="relative py-16 bg-gray-900 rounded-2xl overflow-hidden max-w-5xl mx-auto my-12 px-8">
         {/* Background Image */}
         <div className="absolute inset-0 bg-gradient-to-r from-gray-900 via-gray-800 to-gray-700 rounded-2xl">
           <div className="w-full h-full bg-gradient-to-br from-gray-800/80 to-gray-900/90 rounded-2xl"></div>
         </div>
         
         {/* Content */}
-        <div className="relative z-10 container mx-auto px-6 max-w-5xl">
-          <div className="max-w-xl">
-            <h2 className="text-4xl lg:text-5xl font-bold text-white mb-6 cta-element opacity-100">
+        <div className="relative z-10 container mx-auto px-8 max-w-4xl">
+          <div className="max-w-2xl text-left ml-6">
+            <h2 className="text-3xl lg:text-4xl font-bold text-white mb-6 cta-element opacity-100">
               Leading the Way in Agile Excellence
             </h2>
             <p className="text-lg text-gray-200 leading-relaxed mb-8 cta-element opacity-100">
@@ -42,8 +42,8 @@ export default function AgileExcellenceCTA({ data }) {
             </div>
             
             {/* Diagram Image */}
-            <div className="cta-element opacity-100 mt-8">
-              <div className="w-full h-64 bg-gray-700 rounded-lg shadow-lg flex items-center justify-center">
+            <div className="cta-element opacity-100 mt-8 ml-12">
+              <div className="w-11/12 h-56 bg-gray-700 rounded-lg shadow-lg flex items-center justify-center">
                 <p className="text-gray-300 text-lg">SAFe Framework Diagram</p>
               </div>
             </div>
@@ -103,7 +103,7 @@ export default function AgileExcellenceCTA({ data }) {
   }
 
   return (
-    <section className={`relative ${getSectionHeight(data.sectionHeight)} bg-gray-900 rounded-2xl overflow-hidden max-w-6xl mx-auto my-8`} ref={sectionRef}>
+    <section className={`relative py-16 bg-gray-900 rounded-2xl overflow-hidden max-w-5xl mx-auto my-12 px-8`} ref={sectionRef}>
       {/* Background Image */}
       {data.backgroundImage ? (
         <div className="absolute inset-0">
@@ -123,10 +123,10 @@ export default function AgileExcellenceCTA({ data }) {
         </div>
       )}
       
-      {/* Content */}
-      <div className="relative z-10 container mx-auto px-6 max-w-5xl">
-        <div className="max-w-xl">
-          <h2 className={`text-4xl lg:text-5xl font-bold mb-6 cta-element opacity-100 ${getTextColor(data.textColor)}`}>
+            {/* Content */}
+      <div className="relative z-10 container mx-auto px-8 max-w-4xl">
+        <div className="max-w-2xl text-left ml-6">
+          <h2 className={`text-3xl lg:text-4xl font-bold mb-6 cta-element opacity-100 ${getTextColor(data.textColor)}`}>
             {data.title || 'Leading the Way in Agile Excellence'}
           </h2>
           <p className={`text-lg leading-relaxed mb-8 cta-element opacity-100 ${getTextColor(data.textColor)}`}>
@@ -145,11 +145,11 @@ export default function AgileExcellenceCTA({ data }) {
           
           {/* Diagram Image */}
           {data.diagramImage && (
-            <div className="cta-element opacity-100 mt-8">
+            <div className="cta-element opacity-100 mt-8 ml-12">
               <img
                 src={urlFor(data.diagramImage).width(800).height(600).url()}
                 alt="SAFe Framework Diagram"
-                className="w-full h-auto rounded-lg shadow-lg"
+                className="w-11/12 h-auto rounded-lg shadow-lg"
               />
             </div>
           )}

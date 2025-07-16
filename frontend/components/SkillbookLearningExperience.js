@@ -61,7 +61,7 @@ export default function SkillbookLearningExperience({ data }) {
                           <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
                         </svg>
                       </div>
-                      <p className="text-gray-700 leading-relaxed">
+                      <p className="text-black text-lg font-medium leading-relaxed">
                         {benefit}
                       </p>
                     </div>
@@ -71,7 +71,7 @@ export default function SkillbookLearningExperience({ data }) {
             </div>
 
             {/* Right Column - Illustrative Images */}
-            <div className="relative space-y-6">
+            <div className="relative space-y-8">
               {/* Top Image - Man at desk */}
               <div className="relative">
                 <div className="w-full h-64 bg-gray-200 rounded-lg overflow-hidden">
@@ -82,7 +82,7 @@ export default function SkillbookLearningExperience({ data }) {
               
               {/* Middle Image - Video call */}
               <div className="relative">
-                <div className="w-full h-48 bg-gray-200 rounded-lg overflow-hidden">
+                <div className="w-full h-[500px] bg-gray-200 rounded-lg overflow-hidden">
                   <div className="w-full h-full bg-gradient-to-b from-gray-300 to-white"></div>
                 </div>
                 <div className="absolute bottom-0 left-0 right-0 h-16 bg-gradient-to-t from-white to-transparent"></div>
@@ -183,7 +183,7 @@ export default function SkillbookLearningExperience({ data }) {
                         </svg>
                       </div>
                     )}
-                    <p className="text-gray-700 leading-relaxed">
+                    <p className="text-black text-lg font-medium leading-relaxed">
                       {benefit.text}
                     </p>
                   </div>
@@ -193,10 +193,14 @@ export default function SkillbookLearningExperience({ data }) {
           </div>
 
           {/* Right Column - Illustrative Images */}
-          <div className="relative space-y-6">
+          <div className="relative space-y-8">
             {data.illustrativeImages && data.illustrativeImages.map((imageData, idx) => (
               <div key={idx} className="relative">
-                <div className="w-full h-48 md:h-56 lg:h-64 rounded-lg overflow-hidden">
+                <div className={`w-full rounded-lg overflow-hidden ${
+                  imageData.position === 'middle' 
+                    ? 'h-[500px]' 
+                    : 'h-48 md:h-56 lg:h-64'
+                }`}>
                   <img
                     src={urlFor(imageData.image).width(400).height(300).url()}
                     alt={imageData.altText || 'Learning experience illustration'}
@@ -229,7 +233,7 @@ export default function SkillbookLearningExperience({ data }) {
                 
                 {/* Middle Image - Video call */}
                 <div className="relative">
-                  <div className="w-full h-48 bg-gray-200 rounded-lg overflow-hidden">
+                  <div className="w-full h-[500px] bg-gray-200 rounded-lg overflow-hidden">
                     <div className="w-full h-full bg-gradient-to-b from-gray-300 to-white"></div>
                   </div>
                   <div className="absolute bottom-0 left-0 right-0 h-16 bg-gradient-to-t from-white to-transparent"></div>

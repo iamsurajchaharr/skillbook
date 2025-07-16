@@ -29,11 +29,27 @@ export default function WhyAdoptSafe({ data }) {
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
             {/* Left Column - Video Call Interface */}
             <div className="relative">
-              {/* Background Shape */}
-              <div className="absolute -left-20 -bottom-20 w-80 h-80 bg-red-400 rounded-full opacity-20"></div>
-              
               {/* Video Call Interface */}
-              <div className="relative z-10 bg-white rounded-lg shadow-lg p-6 max-w-sm mx-auto">
+              <div className="relative bg-white rounded-lg shadow-lg p-6 max-w-sm mx-auto">
+                {/* Background Decorative Shape - Always visible */}
+                <div className="absolute inset-0 flex items-center justify-center z-0">
+                  <div className="w-full h-full flex items-center justify-center">
+                    <div className="relative">
+                      <div className="w-80 h-80 bg-red-500 rounded-full opacity-20"></div>
+                      {/* Default decorative pattern */}
+                      <div className="absolute inset-0 w-full h-full flex items-center justify-center">
+                        <svg className="w-64 h-64 text-red-400 opacity-30" fill="currentColor" viewBox="0 0 100 100">
+                          <circle cx="50" cy="50" r="45" fill="none" stroke="currentColor" strokeWidth="2"/>
+                          <circle cx="50" cy="50" r="35" fill="none" stroke="currentColor" strokeWidth="1"/>
+                          <circle cx="50" cy="50" r="25" fill="none" stroke="currentColor" strokeWidth="1"/>
+                        </svg>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                
+                {/* Content */}
+                <div className="relative z-10">
                 <div className="text-center mb-4">
                   <p className="text-sm text-gray-600">5:00 PM - 15 mins</p>
                   <h3 className="font-semibold text-gray-900">Courses</h3>
@@ -52,6 +68,7 @@ export default function WhyAdoptSafe({ data }) {
                 </div>
               </div>
             </div>
+          </div>
 
             {/* Right Column - Content */}
             <div>
@@ -75,8 +92,12 @@ export default function WhyAdoptSafe({ data }) {
                 ].map((benefit, idx) => (
                   <div key={idx} className="benefit-item opacity-100 bg-gray-50 border border-gray-200 rounded-lg p-4">
                     <div className="flex items-start space-x-3">
-                      <div className="w-5 h-5 bg-red-500 rounded-full flex-shrink-0 mt-0.5"></div>
-                      <p className="text-gray-700 leading-relaxed">
+                      <div className="w-6 h-6 bg-red-500 rounded-full flex-shrink-0 mt-0.5 flex items-center justify-center">
+                        <svg className="w-4 h-4 text-white" fill="currentColor" viewBox="0 0 20 20">
+                          <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
+                        </svg>
+                      </div>
+                      <p className="text-black text-lg font-medium leading-relaxed">
                         {benefit}
                       </p>
                     </div>
@@ -107,45 +128,62 @@ export default function WhyAdoptSafe({ data }) {
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
           {/* Left Column - Video Call Interface */}
           <div className="relative">
-            {/* Background Shape */}
-            {data.backgroundShape && (
-              <div className="absolute -left-20 -bottom-20 w-80 h-80">
-                <img
-                  src={urlFor(data.backgroundShape).width(320).height(320).url()}
-                  alt="Background decoration"
-                  className="w-full h-full object-contain"
-                />
-              </div>
-            )}
-            
             {/* Video Call Interface */}
-            <div className="relative z-10 bg-white rounded-lg shadow-lg p-6 max-w-sm mx-auto">
-              {data.videoCallImage ? (
-                <img
-                  src={urlFor(data.videoCallImage).width(300).height(400).url()}
-                  alt="Video call interface"
-                  className="w-full h-auto rounded"
-                />
-              ) : (
-                <>
-                  <div className="text-center mb-4">
-                    <p className="text-sm text-gray-600">5:00 PM - 15 mins</p>
-                    <h3 className="font-semibold text-gray-900">Courses</h3>
+            <div className="relative bg-white rounded-lg shadow-lg p-6 max-w-sm mx-auto">
+              {/* Background Decorative Shape - Always visible */}
+              <div className="absolute inset-0 flex items-center justify-center z-0">
+                <div className="w-full h-full flex items-center justify-center">
+                  <div className="relative">
+                    <div className="w-80 h-80 bg-red-500 rounded-full opacity-20"></div>
+                    {data.backgroundShape ? (
+                      <img
+                        src={urlFor(data.backgroundShape).width(320).height(320).url()}
+                        alt="Background decoration"
+                        className="absolute inset-0 w-full h-full object-contain opacity-30"
+                      />
+                    ) : (
+                      /* Default decorative pattern */
+                      <div className="absolute inset-0 w-full h-full flex items-center justify-center">
+                        <svg className="w-64 h-64 text-red-400 opacity-30" fill="currentColor" viewBox="0 0 100 100">
+                          <circle cx="50" cy="50" r="45" fill="none" stroke="currentColor" strokeWidth="2"/>
+                          <circle cx="50" cy="50" r="35" fill="none" stroke="currentColor" strokeWidth="1"/>
+                          <circle cx="50" cy="50" r="25" fill="none" stroke="currentColor" strokeWidth="1"/>
+                        </svg>
+                      </div>
+                    )}
                   </div>
-                  
-                  {/* Calendar Grid */}
-                  <div className="grid grid-cols-7 gap-1">
-                    {Array.from({ length: 38 }, (_, i) => (
-                      <div 
-                        key={i} 
-                        className={`w-4 h-4 rounded-sm ${
-                          i < 2 ? 'bg-teal-400' : 'bg-gray-200'
-                        }`}
-                      ></div>
-                    ))}
-                  </div>
-                </>
-              )}
+                </div>
+              </div>
+              
+              {/* Content */}
+              <div className="relative z-10">
+                {data.videoCallImage ? (
+                  <img
+                    src={urlFor(data.videoCallImage).width(300).height(400).url()}
+                    alt="Video call interface"
+                    className="w-full h-auto rounded"
+                  />
+                ) : (
+                  <>
+                    <div className="text-center mb-4">
+                      <p className="text-sm text-gray-600">5:00 PM - 15 mins</p>
+                      <h3 className="font-semibold text-gray-900">Courses</h3>
+                    </div>
+                    
+                    {/* Calendar Grid */}
+                    <div className="grid grid-cols-7 gap-1">
+                      {Array.from({ length: 38 }, (_, i) => (
+                        <div 
+                          key={i} 
+                          className={`w-4 h-4 rounded-sm ${
+                            i < 2 ? 'bg-teal-400' : 'bg-gray-200'
+                          }`}
+                        ></div>
+                      ))}
+                    </div>
+                  </>
+                )}
+              </div>
             </div>
           </div>
 
@@ -168,8 +206,12 @@ export default function WhyAdoptSafe({ data }) {
               {data.benefits && data.benefits.map((benefit, idx) => (
                 <div key={idx} className="benefit-item opacity-100 bg-gray-50 border border-gray-200 rounded-lg p-4">
                   <div className="flex items-start space-x-3">
-                    <div className="w-5 h-5 bg-red-500 rounded-full flex-shrink-0 mt-0.5"></div>
-                    <p className="text-gray-700 leading-relaxed">
+                    <div className="w-6 h-6 bg-red-500 rounded-full flex-shrink-0 mt-0.5 flex items-center justify-center">
+                      <svg className="w-4 h-4 text-white" fill="currentColor" viewBox="0 0 20 20">
+                        <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
+                      </svg>
+                    </div>
+                    <p className="text-black text-lg font-medium leading-relaxed">
                       {typeof benefit === 'string' ? benefit : (benefit.text || benefit)}
                     </p>
                   </div>

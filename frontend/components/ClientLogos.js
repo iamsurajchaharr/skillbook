@@ -1,14 +1,9 @@
 import React, { useEffect, useRef } from 'react'
 import { urlFor } from '../utils/imageBuilder'
 import anime from 'animejs'
+import { AnimatedStaggerContainer, AnimatedItem } from './PageAnimations'
 
 export default function ClientLogos({ data }) {
-  // Debug logging
-  console.log('ClientLogos data:', data)
-  console.log('ClientLogos data type:', typeof data)
-  console.log('ClientLogos logos:', data?.logos)
-  console.log('ClientLogos logos length:', data?.logos?.length)
-  
   const sectionRef = useRef()
 
   useEffect(() => {
@@ -46,53 +41,33 @@ export default function ClientLogos({ data }) {
   }, [data])
 
   const getBackgroundColor = (color) => {
-    switch (color) {
-      case 'blue':
-        return 'bg-blue-500'
-      case 'green':
-        return 'bg-green-500'
-      case 'red':
-        return 'bg-red-500'
-      case 'yellow':
-        return 'bg-yellow-500'
-      case 'purple':
-        return 'bg-purple-500'
-      case 'pink':
-        return 'bg-pink-500'
-      case 'dark-blue':
-        return 'bg-blue-700'
-      case 'light-green':
-        return 'bg-green-300'
-      case 'white':
-        return 'bg-white border border-gray-200'
-      default:
-        return 'bg-gray-500'
-    }
+    // All logos now have completely transparent backgrounds
+    return ''
   }
 
   const getLogoStyle = (style) => {
     switch (style) {
       case 'circular-shadow':
-        return 'rounded-full shadow-lg'
+        return 'rounded-full'
       case 'circular':
         return 'rounded-full'
       case 'rounded-shadow':
-        return 'rounded-lg shadow-lg'
+        return 'rounded-lg'
       case 'rounded':
         return 'rounded-lg'
       default:
-        return 'rounded-full shadow-lg'
+        return 'rounded-full'
     }
   }
 
   const getLogoSize = (size) => {
     switch (size) {
       case 'small':
-        return 'w-20 h-20'
+        return 'w-16 h-16'
       case 'large':
-        return 'w-32 h-32'
+        return 'w-24 h-24'
       default:
-        return 'w-28 h-28'
+        return 'w-20 h-20'
     }
   }
 
@@ -107,30 +82,33 @@ export default function ClientLogos({ data }) {
     }
   }
 
-  const getScatteredPosition = (index) => {
-    const positions = [
-      'transform translate-x-0 translate-y-0',
-      'transform translate-x-2 translate-y-1',
-      'transform -translate-x-1 translate-y-2',
-      'transform translate-x-3 -translate-y-0.5',
-      'transform -translate-x-2 translate-y-0.5',
-      'transform translate-x-1 -translate-y-1.5',
-      'transform -translate-x-0.5 translate-y-2.5',
-      'transform translate-x-2.5 translate-y-1.5',
-      'transform -translate-x-1.5 -translate-y-1',
-      'transform translate-x-0.5 translate-y-3',
-      'transform -translate-x-2.5 translate-y-1',
-      'transform translate-x-1.5 -translate-y-2',
-      'transform translate-x-3.5 translate-y-0.5',
-      'transform -translate-x-3 translate-y-2',
-      'transform translate-x-2 -translate-y-2.5'
+  const getCircularPosition = (index, total) => {
+    // Calculate angle for each logo in a circle
+    const angle = (index / total) * 2 * Math.PI
+    const radius = 180 // Adjust this value to change circle size
+    
+    // Calculate x and y positions on the circle
+    const x = Math.cos(angle) * radius
+    const y = Math.sin(angle) * radius
+    
+    // Add some predefined randomness to make it less perfect
+    const randomOffsets = [
+      { x: -15, y: 10 }, { x: 20, y: -5 }, { x: -10, y: -20 }, { x: 25, y: 15 },
+      { x: -20, y: -10 }, { x: 15, y: 20 }, { x: -5, y: -25 }, { x: 30, y: -15 },
+      { x: -25, y: 5 }, { x: 10, y: -30 }, { x: -15, y: 25 }, { x: 20, y: 10 }
     ]
-    return positions[index % positions.length]
+    
+    const offset = randomOffsets[index % randomOffsets.length]
+    
+    return {
+      x: x + offset.x,
+      y: y + offset.y
+    }
   }
 
   if (!data) {
     return (
-      <section className="py-16 bg-white">
+      <section className="py-16">
         <div className="container mx-auto px-6">
           <div className="text-center mb-12">
             <h2 className="text-3xl lg:text-4xl font-bold text-gray-900 mb-6">
@@ -141,7 +119,7 @@ export default function ClientLogos({ data }) {
             </p>
           </div>
           
-          <div className="grid grid-cols-12 md:grid-cols-15 lg:grid-cols-18 gap-1 md:gap-2 lg:gap-3">
+          <div className="grid grid-cols-4 md:grid-cols-6 lg:grid-cols-8 gap-8 max-w-4xl mx-auto">
             {[
               { name: 'LinkedIn', color: 'blue' },
               { name: 'GitHub', color: 'green' },
@@ -156,10 +134,13 @@ export default function ClientLogos({ data }) {
               { name: 'Quora', color: 'blue' },
               { name: 'Python', color: 'red' }
             ].map((logo, idx) => (
-              <div key={idx} className={`logo-item opacity-100 flex justify-center ${getScatteredPosition(idx)}`}>
-                <div className={`${getLogoSize('medium')} flex items-center justify-center transition-all duration-300 hover:scale-110 relative group`}>
-                  <div className="w-12 h-12 flex items-center justify-center">
-                    <span className="text-sm font-bold text-gray-700">{logo.name.charAt(0)}</span>
+              <div 
+                key={idx} 
+                className="logo-item opacity-0 flex justify-center"
+              >
+                <div className={`${getLogoSize('medium')} ${getLogoStyle('circular-shadow')} ${getBackgroundColor(logo.color)} flex items-center justify-center`}>
+                  <div className="w-16 h-16 rounded-full flex items-center justify-center">
+                    <span className="text-lg font-bold text-gray-700">{logo.name.charAt(0)}</span>
                   </div>
                 </div>
               </div>
@@ -187,30 +168,24 @@ export default function ClientLogos({ data }) {
         </div>
         
         {/* Logos Grid */}
-        <div className={`${
-          data.layout === 'scattered' 
-            ? 'grid grid-cols-12 md:grid-cols-15 lg:grid-cols-18 gap-1 md:gap-2 lg:gap-3' 
-            : 'grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-8'
-        }`}>
+        <AnimatedStaggerContainer className="grid grid-cols-4 md:grid-cols-6 lg:grid-cols-8 gap-8 max-w-4xl mx-auto">
           {sortedLogos.map((logo, idx) => (
-            <div 
+            <AnimatedItem 
               key={idx} 
-              className={`logo-item opacity-100 flex justify-center ${
-                data.layout === 'scattered' ? getScatteredPosition(idx) : ''
-              }`}
+              className="logo-item opacity-0 flex justify-center"
             >
               <div 
-                className={`${getLogoSize(data.logoSize)} flex items-center justify-center transition-all duration-300 hover:scale-110 relative group`}
+                className={`${getLogoSize(data.logoSize)} ${getLogoStyle(data.logoStyle)} ${getBackgroundColor(logo.backgroundColor)} flex items-center justify-center transition-transform duration-300 hover:scale-110 relative group`}
               >
                 {logo.logo ? (
                   <img
                     src={urlFor(logo.logo).width(64).height(64).url()}
                     alt={logo.name}
-                    className="w-12 h-12 object-contain"
+                    className="w-16 h-16 object-contain"
                   />
                 ) : (
-                  <div className="w-12 h-12 flex items-center justify-center">
-                    <span className="text-sm font-bold text-gray-700">{logo.name.charAt(0)}</span>
+                  <div className="w-16 h-16 rounded-full flex items-center justify-center">
+                    <span className="text-lg font-bold text-gray-700">{logo.name.charAt(0)}</span>
                   </div>
                 )}
                 
@@ -221,9 +196,9 @@ export default function ClientLogos({ data }) {
                   </div>
                 )}
               </div>
-            </div>
+            </AnimatedItem>
           ))}
-        </div>
+        </AnimatedStaggerContainer>
       </div>
     </section>
   )

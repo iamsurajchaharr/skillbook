@@ -1,6 +1,7 @@
 import React, { useEffect, useRef } from 'react'
 import { urlFor } from '../utils/imageBuilder'
 import anime from 'animejs'
+import { AnimatedStaggerContainer, AnimatedItem } from './PageAnimations'
 
 export default function Benefits({ data }) {
   const sectionRef = useRef()
@@ -24,7 +25,7 @@ export default function Benefits({ data }) {
         <div className="container mx-auto px-6">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
             {/* Left Column - Content */}
-            <div>
+            <div className="lg:ml-16 lg:max-w-md">
               <span className="text-sm font-semibold text-coral-red uppercase tracking-wide mb-2 block">
                 EXPLORE
               </span>
@@ -72,13 +73,27 @@ export default function Benefits({ data }) {
 
             {/* Right Column - Mobile Phone Mockup */}
             <div className="relative">
-              {/* Background Decorative Shape */}
-              <div className="absolute -right-20 -top-20 w-80 h-80 opacity-10">
-                <div className="w-full h-full bg-red-400 rounded-full"></div>
-              </div>
-              
               {/* Mobile Phone */}
-                             <div className="relative z-10">
+              <div className="relative">
+                {/* Background Decorative Shape - Always visible */}
+                <div className="absolute inset-0 flex items-center justify-center z-0">
+                  <div className="w-full h-full flex items-center justify-center">
+                    <div className="relative">
+                      <div className="w-80 h-80 bg-red-500 rounded-full opacity-20"></div>
+                      {/* Default decorative pattern */}
+                      <div className="absolute inset-0 w-full h-full flex items-center justify-center">
+                        <svg className="w-64 h-64 text-red-400 opacity-30" fill="currentColor" viewBox="0 0 100 100">
+                          <circle cx="50" cy="50" r="45" fill="none" stroke="currentColor" strokeWidth="2"/>
+                          <circle cx="50" cy="50" r="35" fill="none" stroke="currentColor" strokeWidth="1"/>
+                          <circle cx="50" cy="50" r="25" fill="none" stroke="currentColor" strokeWidth="1"/>
+                        </svg>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                
+                {/* Mobile Phone Content */}
+                <div className="relative z-10">
                  <div className="mobile-phone w-64 h-96 bg-white border-4 border-amber-800 rounded-3xl mx-auto shadow-2xl p-4">
                   {/* Phone Screen Content */}
                   <div className="h-full bg-gray-50 rounded-2xl p-4">
@@ -113,6 +128,7 @@ export default function Benefits({ data }) {
             </div>
           </div>
         </div>
+        </div>
       </section>
     )
   }
@@ -122,7 +138,7 @@ export default function Benefits({ data }) {
       <div className="container mx-auto px-6">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
           {/* Left Column - Content */}
-          <div>
+          <div className="lg:ml-16 lg:max-w-md">
             {data.category && (
               <span className="text-sm font-semibold text-coral-red uppercase tracking-wide mb-2 block">
                 {data.category}
@@ -136,9 +152,10 @@ export default function Benefits({ data }) {
             </p>
             
             {/* Benefits List */}
-            <div className="space-y-6">
+            <AnimatedStaggerContainer className="space-y-6">
               {data.benefits && data.benefits.map((benefit, idx) => (
-                <div key={idx} className="benefit-item opacity-100">
+                <AnimatedItem key={idx}>
+                  <div className="benefit-item opacity-100">
                   <h3 className="font-bold text-lg text-gray-900 mb-2">
                     {typeof benefit === 'string' ? benefit : benefit.title}:
                   </h3>
@@ -150,26 +167,43 @@ export default function Benefits({ data }) {
                   {idx === 0 && (
                     <div className="w-16 h-px bg-coral-red mt-4"></div>
                   )}
-                </div>
+                  </div>
+                </AnimatedItem>
               ))}
-            </div>
+            </AnimatedStaggerContainer>
           </div>
 
           {/* Right Column - Mobile Phone Mockup */}
           <div className="relative">
-            {/* Background Decorative Shape */}
-            {data.backgroundShape && (
-              <div className="absolute -right-20 -top-20 w-80 h-80 opacity-10">
-                <img
-                  src={urlFor(data.backgroundShape).width(320).height(320).url()}
-                  alt="Background decoration"
-                  className="w-full h-full object-contain"
-                />
-              </div>
-            )}
-            
             {/* Mobile Phone */}
-            <div className="relative z-10">
+            <div className="relative">
+              {/* Background Decorative Shape - Always visible */}
+              <div className="absolute inset-0 flex items-center justify-center z-0">
+                <div className="w-full h-full flex items-center justify-center">
+                  <div className="relative">
+                    <div className="w-80 h-80 bg-red-500 rounded-full opacity-20"></div>
+                    {data.backgroundShape ? (
+                      <img
+                        src={urlFor(data.backgroundShape).width(320).height(320).url()}
+                        alt="Background decoration"
+                        className="absolute inset-0 w-full h-full object-contain opacity-30"
+                      />
+                    ) : (
+                      /* Default decorative pattern */
+                      <div className="absolute inset-0 w-full h-full flex items-center justify-center">
+                        <svg className="w-64 h-64 text-red-400 opacity-30" fill="currentColor" viewBox="0 0 100 100">
+                          <circle cx="50" cy="50" r="45" fill="none" stroke="currentColor" strokeWidth="2"/>
+                          <circle cx="50" cy="50" r="35" fill="none" stroke="currentColor" strokeWidth="1"/>
+                          <circle cx="50" cy="50" r="25" fill="none" stroke="currentColor" strokeWidth="1"/>
+                        </svg>
+                      </div>
+                    )}
+                  </div>
+                </div>
+              </div>
+              
+              {/* Mobile Phone Content */}
+              <div className="relative z-10">
               {data.mobileMockup ? (
                 <img
                   src={urlFor(data.mobileMockup).width(400).height(600).url()}
@@ -203,6 +237,7 @@ export default function Benefits({ data }) {
                   </div>
                 </div>
               )}
+              </div>
             </div>
           </div>
         </div>

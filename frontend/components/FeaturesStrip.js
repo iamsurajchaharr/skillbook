@@ -41,7 +41,7 @@ export default function FeaturesStrip({ data }) {
   return (
     <section className={`py-8 ${getBackgroundColor()} border-b`}>
       <div className="container mx-auto px-6">
-        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-8">
+        <div className="grid grid-cols-5 gap-8">
           {data.features.map((feature, idx) => (
             <div key={idx} className="flex flex-col items-center text-center">
               {feature.icon ? (
@@ -56,9 +56,6 @@ export default function FeaturesStrip({ data }) {
                 </div>
               )}
               <span className="text-sm font-medium text-gray-700">{feature.label}</span>
-              {feature.description && (
-                <span className="text-xs text-gray-500 mt-1">{feature.description}</span>
-              )}
             </div>
           ))}
         </div>

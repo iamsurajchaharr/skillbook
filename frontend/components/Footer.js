@@ -118,7 +118,7 @@ const Footer = ({ data }) => {
           className="space-y-8"
         >
           {/* Top Section */}
-          <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
             {/* Left - Branding and Social Media */}
             <motion.div variants={itemVariants} className="space-y-6">
               {/* Logo */}
@@ -167,13 +167,13 @@ const Footer = ({ data }) => {
                   {safePaymentMethods.map((payment, index) => (
                     <div
                       key={index}
-                      className="border border-white rounded px-3 py-2 bg-white"
+                      className="flex items-center justify-center"
                     >
                       {payment.logo && (
                         <img
                           src={urlFor(payment.logo).width(60).height(40).url()}
                           alt={payment.name}
-                          className="h-6 w-auto"
+                          className="h-8 w-auto filter brightness-0 invert"
                         />
                       )}
                     </div>

@@ -3,29 +3,14 @@ import { urlFor } from '../utils/imageBuilder'
 import anime from 'animejs'
 
 export default function IndustryTestimonials({ data }) {
-  // Debug logging
-  console.log('IndustryTestimonials data:', data)
-  console.log('IndustryTestimonials data type:', typeof data)
-  console.log('IndustryTestimonials testimonials:', data?.testimonials)
-  console.log('IndustryTestimonials testimonials length:', data?.testimonials?.length)
-  
   const [currentIndex, setCurrentIndex] = useState(0)
   const [isAutoPlaying, setIsAutoPlaying] = useState(true)
   const carouselRef = useRef()
   const autoPlayRef = useRef()
 
-  useEffect(() => {
-    // if (sectionRef.current) {
-    //   anime({
-    //     targets: sectionRef.current.querySelectorAll('.testimonial-card'),
-    //     opacity: [0,1],
-    //     translateY: [30,0],
-    //     delay: anime.stagger(200),
-    //     duration: 800,
-    //     easing: 'easeOutExpo'
-    //   })
-    // }
-  }, [data])
+  // Debug logging
+  console.log('IndustryTestimonials data:', data)
+  console.log('IndustryTestimonials testimonials:', data?.testimonials)
 
   useEffect(() => {
     if (data?.carouselSettings?.autoPlay && isAutoPlaying) {
@@ -121,20 +106,46 @@ export default function IndustryTestimonials({ data }) {
             </h2>
           </div>
           
-          <div className="relative">
-            <div className="flex space-x-6 overflow-hidden">
-              {[1, 2, 3].map((_, idx) => (
-                <div key={idx} className="testimonial-card opacity-100 flex-shrink-0 w-full md:w-1/3 bg-white rounded-lg shadow-lg p-6">
-                  {renderStars(5, 'orange')}
-                  <p className="text-lg font-bold text-gray-900 mb-4">
-                    "Information-packed and relevant to my work. The two-day session was packed with information and included opportunities for small group discussion and collaborative problem-solving."
-                  </p>
-                  <div>
-                    <p className="font-semibold text-gray-900">Kate Williams</p>
-                    <p className="text-gray-600">Partner, Maxwell Locke & Ritter</p>
-                  </div>
+          {/* New Layout: Large middle testimonial with smaller side testimonials */}
+          <div className="relative flex items-center justify-center">
+            {/* Left Testimonial - Half off-screen */}
+            <div className="absolute left-0 transform -translate-x-1/3 opacity-70 scale-90">
+              <div className="testimonial-card bg-white rounded-lg shadow-lg p-6 w-[550px] h-48">
+                {renderStars(5, 'orange')}
+                <p className="text-base font-bold text-gray-900 mb-3">
+                  "Information-packed and relevant to my work. The two-day session was packed with information and included opportunities for discussion."
+                </p>
+                <div>
+                  <p className="font-semibold text-gray-900 text-sm">Kate Williams</p>
+                  <p className="text-gray-600 text-xs">Partner, Maxwell Locke & Ritter</p>
                 </div>
-              ))}
+              </div>
+            </div>
+            
+            {/* Middle Testimonial - Large and centered */}
+            <div className="z-10 bg-white rounded-lg shadow-xl p-8 w-[600px]">
+              {renderStars(5, 'orange')}
+              <p className="text-xl font-bold text-gray-900 mb-6">
+                "Information-packed and relevant to my work. The two-day session was packed with information and included opportunities for small group discussion and collaborative problem-solving."
+              </p>
+              <div>
+                <p className="font-semibold text-gray-900 text-lg">Kate Williams</p>
+                <p className="text-gray-600">Partner, Maxwell Locke & Ritter</p>
+              </div>
+            </div>
+            
+            {/* Right Testimonial - Half off-screen */}
+            <div className="absolute right-0 transform translate-x-1/3 opacity-70 scale-90">
+              <div className="testimonial-card bg-white rounded-lg shadow-lg p-6 w-[450px] h-48">
+                {renderStars(5, 'orange')}
+                <p className="text-base font-bold text-gray-900 mb-3">
+                  "Information-packed and relevant to my work. The two-day session was packed with information and included opportunities for discussion."
+                </p>
+                <div>
+                  <p className="font-semibold text-gray-900 text-sm">Kate Williams</p>
+                  <p className="text-gray-600 text-xs">Partner, Maxwell Locke & Ritter</p>
+                </div>
+              </div>
             </div>
           </div>
         </div>
@@ -146,6 +157,69 @@ export default function IndustryTestimonials({ data }) {
   const testimonials = data.testimonials || []
   const cardsToShow = data.carouselSettings?.cardsToShow || 3
   const maxIndex = Math.max(0, testimonials.length - cardsToShow)
+
+  // If no testimonials, show fallback content
+  if (testimonials.length === 0) {
+    return (
+      <section className={`py-16 ${getBackgroundColor(data.backgroundColor)}`} ref={sectionRef}>
+        <div className="container mx-auto px-6">
+          <div className="text-center mb-12">
+            <h2 className="text-3xl lg:text-4xl font-bold text-gray-900 mb-6">
+              {data.title || 'Success Stories Across Industries - Client Testimonials by Industries'}
+            </h2>
+            {data.subtitle && (
+              <p className="text-lg text-gray-600 max-w-3xl mx-auto">
+                {data.subtitle}
+              </p>
+            )}
+          </div>
+          
+          {/* New Layout: Large middle testimonial with smaller side testimonials */}
+          <div className="relative flex items-center justify-center">
+            {/* Left Testimonial - Half off-screen */}
+            <div className="absolute left-0 transform -translate-x-1/3 opacity-70 scale-90">
+              <div className="testimonial-card bg-white rounded-lg shadow-lg p-6 w-[550px] h-48">
+                {renderStars(5, 'orange')}
+                <p className="text-base font-bold text-gray-900 mb-3">
+                  "Information-packed and relevant to my work. The two-day session was packed with information and included opportunities for discussion."
+                </p>
+                <div>
+                  <p className="font-semibold text-gray-900 text-sm">Kate Williams</p>
+                  <p className="text-gray-600 text-xs">Partner, Maxwell Locke & Ritter</p>
+                </div>
+              </div>
+            </div>
+            
+            {/* Middle Testimonial - Large and centered */}
+            <div className="z-10 bg-white rounded-lg shadow-xl p-8 w-[700px]">
+              {renderStars(5, 'orange')}
+              <p className="text-xl font-bold text-gray-900 mb-6">
+                "Information-packed and relevant to my work. The two-day session was packed with information and included opportunities for small group discussion and collaborative problem-solving."
+              </p>
+              <div>
+                <p className="font-semibold text-gray-900 text-lg">Kate Williams</p>
+                <p className="text-gray-600">Partner, Maxwell Locke & Ritter</p>
+              </div>
+            </div>
+            
+            {/* Right Testimonial - Half off-screen */}
+            <div className="absolute right-0 transform translate-x-1/3 opacity-70 scale-90">
+              <div className="testimonial-card bg-white rounded-lg shadow-lg p-6 w-[550px] h-48">
+                {renderStars(5, 'orange')}
+                <p className="text-base font-bold text-gray-900 mb-3">
+                  "Information-packed and relevant to my work. The two-day session was packed with information and included opportunities for discussion."
+                </p>
+                <div>
+                  <p className="font-semibold text-gray-900 text-sm">Kate Williams</p>
+                  <p className="text-gray-600 text-xs">Partner, Maxwell Locke & Ritter</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+    )
+  }
 
   return (
     <section className={`py-16 ${getBackgroundColor(data.backgroundColor)}`} ref={sectionRef}>
@@ -186,41 +260,92 @@ export default function IndustryTestimonials({ data }) {
             </>
           )}
 
-          {/* Testimonial Cards */}
-          <div className="flex space-x-6 overflow-hidden" ref={carouselRef}>
-            {testimonials.map((testimonial, idx) => (
-              <div
-                key={idx}
-                className={`testimonial-card opacity-100 flex-shrink-0 w-full md:w-1/${cardsToShow} bg-white ${getCardStyle(data.cardStyle)} p-6 transition-transform duration-500`}
-                style={{
-                  transform: `translateX(-${currentIndex * (100 / cardsToShow)}%)`
-                }}
-              >
-                {renderStars(testimonial.rating, data.starColor)}
-                <p className="text-lg font-bold text-gray-900 mb-4">
-                  "{testimonial.quote}"
+          {/* New Layout: Large middle testimonial with smaller side testimonials */}
+          <div className="relative flex items-center justify-center">
+            {/* Left Testimonial - Half off-screen */}
+            {testimonials.length > 0 && (
+              <div className="absolute left-0 transform -translate-x-1/3 opacity-70 scale-90">
+                <div className={`testimonial-card bg-white ${getCardStyle(data.cardStyle)} p-6 w-[550px] h-48`}>
+                  {renderStars(testimonials[0]?.rating || 5, data.starColor || 'orange')}
+                  <p className="text-base font-bold text-gray-900 mb-3">
+                    "{testimonials[0]?.quote || 'Information-packed and relevant to my work. The two-day session was packed with information and included opportunities for discussion.'}"
+                  </p>
+                  <div className="flex items-center space-x-2">
+                    {testimonials[0]?.authorImage && (
+                      <img
+                        src={urlFor(testimonials[0].authorImage).width(32).height(32).url()}
+                        alt={testimonials[0].authorName || 'Author'}
+                        className="w-8 h-8 rounded-full object-cover"
+                      />
+                    )}
+                    <div>
+                      <p className="font-semibold text-gray-900 text-sm">{testimonials[0]?.authorName || 'Anonymous'}</p>
+                      <p className="text-gray-600 text-xs">
+                        {testimonials[0]?.authorTitle && `${testimonials[0].authorTitle}, `}
+                        {testimonials[0]?.company || 'Company'}
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            )}
+            
+            {/* Middle Testimonial - Large and centered */}
+            {testimonials.length > 1 && (
+              <div className="z-10 bg-white rounded-lg shadow-xl p-8 w-[700px]">
+                {renderStars(testimonials[1]?.rating || 5, data.starColor || 'orange')}
+                <p className="text-xl font-bold text-gray-900 mb-6">
+                  "{testimonials[1]?.quote || 'Information-packed and relevant to my work. The two-day session was packed with information and included opportunities for small group discussion and collaborative problem-solving.'}"
                 </p>
                 <div className="flex items-center space-x-3">
-                  {testimonial.authorImage && (
+                  {testimonials[1]?.authorImage && (
                     <img
-                      src={urlFor(testimonial.authorImage).width(48).height(48).url()}
-                      alt={testimonial.authorName}
+                      src={urlFor(testimonials[1].authorImage).width(48).height(48).url()}
+                      alt={testimonials[1].authorName || 'Author'}
                       className="w-12 h-12 rounded-full object-cover"
                     />
                   )}
                   <div>
-                    <p className="font-semibold text-gray-900">{testimonial.authorName}</p>
+                    <p className="font-semibold text-gray-900 text-lg">{testimonials[1]?.authorName || 'Anonymous'}</p>
                     <p className="text-gray-600">
-                      {testimonial.authorTitle && `${testimonial.authorTitle}, `}
-                      {testimonial.company}
+                      {testimonials[1]?.authorTitle && `${testimonials[1].authorTitle}, `}
+                      {testimonials[1]?.company || 'Company'}
                     </p>
-                    {testimonial.industry && (
-                      <p className="text-sm text-gray-500">{testimonial.industry}</p>
+                    {testimonials[1]?.industry && (
+                      <p className="text-sm text-gray-500">{testimonials[1].industry}</p>
                     )}
                   </div>
                 </div>
               </div>
-            ))}
+            )}
+            
+            {/* Right Testimonial - Half off-screen */}
+            {testimonials.length > 2 && (
+              <div className="absolute right-0 transform translate-x-1/3 opacity-70 scale-90">
+                <div className={`testimonial-card bg-white ${getCardStyle(data.cardStyle)} p-6 w-[550px] h-48`}>
+                  {renderStars(testimonials[2]?.rating || 5, data.starColor || 'orange')}
+                  <p className="text-base font-bold text-gray-900 mb-3">
+                    "{testimonials[2]?.quote || 'Information-packed and relevant to my work. The two-day session was packed with information and included opportunities for discussion.'}"
+                  </p>
+                  <div className="flex items-center space-x-2">
+                    {testimonials[2]?.authorImage && (
+                      <img
+                        src={urlFor(testimonials[2].authorImage).width(32).height(32).url()}
+                        alt={testimonials[2].authorName || 'Author'}
+                        className="w-8 h-8 rounded-full object-cover"
+                      />
+                    )}
+                    <div>
+                      <p className="font-semibold text-gray-900 text-sm">{testimonials[2]?.authorName || 'Anonymous'}</p>
+                      <p className="text-gray-600 text-xs">
+                        {testimonials[2]?.authorTitle && `${testimonials[2].authorTitle}, `}
+                        {testimonials[2]?.company || 'Company'}
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            )}
           </div>
 
           {/* Navigation Dots */}

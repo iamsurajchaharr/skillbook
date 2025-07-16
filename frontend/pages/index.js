@@ -5,7 +5,6 @@ import Hero from '../components/Hero'
 import CoursesGrid from '../components/CoursesGrid'
 import Features from '../components/Features'
 import LearningExperience from '../components/LearningExperience'
-import Testimonials from '../components/Testimonials'
 import FeaturesStrip from '../components/FeaturesStrip'
 import WhyChooseUs from '../components/WhyChooseUs'
 import Benefits from '../components/Benefits'
@@ -21,15 +20,21 @@ import CareerCTA from '../components/CareerCTA'
 import FAQContact from '../components/FAQContact'
 import Accreditations from '../components/Accreditations'
 import Footer from '../components/Footer'
+import { AnimatedSection, PageAnimations } from '../components/PageAnimations'
 
 export async function getStaticProps() {
   const navbarData = await sanityClient.fetch(`*[_type=="navbar"][0]`)
   const heroData = await sanityClient.fetch(`*[_type=="heroSection"][0]`)
-  const featuresStripData = await sanityClient.fetch(`*[_type=="iconFeatures"][0]`)
+  const featuresStripData = await sanityClient.fetch(`*[_type=="iconFeatures"][0]{
+    features[]{
+      icon,
+      label,
+      description
+    },
+    backgroundColor
+  }`)
   const courses = await sanityClient.fetch(`*[_type=="course"] | order(currentPrice desc)`)
   const features = await sanityClient.fetch(`*[_type=="feature"]`)
-  const testimonials = await sanityClient.fetch(`*[_type=="testimonial"]`)
-  console.log('Fetched testimonials:', testimonials)
   const coursesSection = await sanityClient.fetch(`*[_type=="coursesSection"][0]`)
   const whyChooseUsData = await sanityClient.fetch(`*[_type=="whyChooseUs"][0]`)
   const benefitsData = await sanityClient.fetch(`*[_type=="benefits"][0]`)
@@ -54,7 +59,7 @@ export async function getStaticProps() {
 
   return {
     props: {
-      navbarData, heroData, featuresStripData, courses, features, testimonials, coursesSection, 
+      navbarData, heroData, featuresStripData, courses, features, coursesSection, 
       whyChooseUsData, benefitsData, whyAdoptSafeData, frameworkDiagramSectionData, 
       skillbookLearningExperienceData, agileExcellenceCTAData, industryTestimonialsData, 
       clientLogosData, skillbookBlogData, safePromotionData, careerCTAData, faqContactData, 
@@ -66,31 +71,67 @@ export async function getStaticProps() {
 
 export default function Home(props) {
   return (
-    <>
+    <PageAnimations>
       <Navbar 
         logo={props.navbarData?.logo?.image} 
         links={props.navbarData?.links || []} 
         showSearch={props.navbarData?.showSearch}
         searchPlaceholder={props.navbarData?.searchPlaceholder}
       />
-      <Hero data={props.heroData} />
-      <FeaturesStrip data={props.featuresStripData} />
-      <CoursesGrid courses={props.courses} section={props.coursesSection} />
-      <Features items={props.features} />
-      <WhyChooseUs data={props.whyChooseUsData} />
-      <Benefits data={props.benefitsData} />
-      <WhyAdoptSafe data={props.whyAdoptSafeData} />
-      <FrameworkDiagramSection data={props.frameworkDiagramSectionData} />
-      <SkillbookLearningExperience data={props.skillbookLearningExperienceData} />
-      <AgileExcellenceCTA data={props.agileExcellenceCTAData} />
-      <IndustryTestimonials data={props.industryTestimonialsData} />
-      <ClientLogos data={props.clientLogosData} />
-      <SkillbookBlog data={props.skillbookBlogData} />
-      <Accreditations data={props.accreditationsData} />
-      <SafePromotion data={props.safePromotionData} />
-      <CareerCTA data={props.careerCTAData} />
-      <FAQContact data={props.faqContactData} />
-      <Footer data={props.footerData} />
-    </>
+      <AnimatedSection animationType="fadeIn">
+        <Hero data={props.heroData} />
+      </AnimatedSection>
+      <AnimatedSection animationType="fadeIn">
+        <FeaturesStrip data={props.featuresStripData} />
+      </AnimatedSection>
+      <AnimatedSection animationType="stagger">
+        <CoursesGrid courses={props.courses} section={props.coursesSection} />
+      </AnimatedSection>
+      <AnimatedSection animationType="fadeIn">
+        <Features items={props.features} />
+      </AnimatedSection>
+      <AnimatedSection animationType="fadeIn">
+        <WhyChooseUs data={props.whyChooseUsData} />
+      </AnimatedSection>
+      <AnimatedSection animationType="fadeIn">
+        <Benefits data={props.benefitsData} />
+      </AnimatedSection>
+      <AnimatedSection animationType="fadeIn">
+        <WhyAdoptSafe data={props.whyAdoptSafeData} />
+      </AnimatedSection>
+      <AnimatedSection animationType="fadeIn">
+        <FrameworkDiagramSection data={props.frameworkDiagramSectionData} />
+      </AnimatedSection>
+      <AnimatedSection animationType="fadeIn">
+        <SkillbookLearningExperience data={props.skillbookLearningExperienceData} />
+      </AnimatedSection>
+      <AnimatedSection animationType="fadeIn">
+        <AgileExcellenceCTA data={props.agileExcellenceCTAData} />
+      </AnimatedSection>
+      <AnimatedSection animationType="stagger">
+        <IndustryTestimonials data={props.industryTestimonialsData} />
+      </AnimatedSection>
+      <AnimatedSection animationType="fadeIn">
+        <ClientLogos data={props.clientLogosData} />
+      </AnimatedSection>
+      <AnimatedSection animationType="fadeIn">
+        <SkillbookBlog data={props.skillbookBlogData} />
+      </AnimatedSection>
+      <AnimatedSection animationType="fadeIn">
+        <Accreditations data={props.accreditationsData} />
+      </AnimatedSection>
+      <AnimatedSection animationType="fadeIn">
+        <SafePromotion data={props.safePromotionData} />
+      </AnimatedSection>
+      <AnimatedSection animationType="fadeIn">
+        <CareerCTA data={props.careerCTAData} />
+      </AnimatedSection>
+      <AnimatedSection animationType="fadeIn">
+        <FAQContact data={props.faqContactData} />
+      </AnimatedSection>
+      <AnimatedSection animationType="fadeIn">
+        <Footer data={props.footerData} />
+      </AnimatedSection>
+    </PageAnimations>
   )
 } 
